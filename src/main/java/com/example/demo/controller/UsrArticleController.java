@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 public class UsrArticleController {
 	
 	
-	int lastArticleId = 10;
+	int lastArticleId;
 	List<Article> articles;
 	
 	public UsrArticleController() {
 		articles = new ArrayList<>();
-		lastArticleId = 10;
-		
+		lastArticleId = 0;
+		testData();
 	}
 	
 	
@@ -36,7 +36,7 @@ public class UsrArticleController {
 		int id = lastArticleId + 1;
 		
 		
-		testData();
+		
 		Article article = new Article(id, title, body);
 		articles.add(article);
 		
@@ -44,6 +44,32 @@ public class UsrArticleController {
 		
 		return article;
 	}
+	
+	private void testData() {
+		for (int i = 1; i <= 10; i++) {
+			String title = "탄지로";
+			String body = "물의 호흡 제"+i+"형";
+			
+			doAdd(title, body);
+		}
+		
+	}
+//	
+//	@RequestMapping("/usr/article/doDelete")
+//	@ResponseBody
+//	public Article doDelete() {
+//		
+//		Article foundArticle = null;
+//		
+//		for(Article foundArtcle : articles) {
+//			if(article.getID() == id) {
+//				foundArticle = article;
+//			}
+//		}
+//		
+//		
+//		return article;
+//	}
 	
 
 	@RequestMapping("/usr/article/getArticles")
@@ -54,19 +80,6 @@ public class UsrArticleController {
 	}
 	
 	
-	private void testData() {
-		articles.add(new Article(1,"탄지로","물의 호흡 제 1형"));
-		articles.add(new Article(2,"탄지로","물의 호흡 제 2형"));
-		articles.add(new Article(3,"탄지로","물의 호흡 제 3형"));
-		articles.add(new Article(4,"탄지로","물의 호흡 제 4형"));
-		articles.add(new Article(5,"탄지로","물의 호흡 제 5형"));
-		articles.add(new Article(6,"탄지로","물의 호흡 제 6형"));
-		articles.add(new Article(7,"탄지로","물의 호흡 제 7형"));
-		articles.add(new Article(8,"탄지로","물의 호흡 제 8형"));
-		articles.add(new Article(9,"탄지로","물의 호흡 제 9형"));
-		articles.add(new Article(10,"탄지로","물의 호흡 제 10형"));
-		
-	}
 	
 	
 }
