@@ -83,6 +83,22 @@ public class UsrArticleController {
 		return id+"번 글이 삭제되었습니다.";
 	}
 	
+	public String doModify(int id, String title, String body) {
+		
+		Article article = getArticleId(id);
+		
+		
+		if (article == null) {
+			return id+"번 글은 없습니다.";
+		}
+		
+		
+		
+		article.setTitle(title);
+		article.setBody(body);		
+		
+		return id+"번 글이 수정되었습니다." + article;
+	}
 
 
 	@RequestMapping("/usr/article/getArticles")
