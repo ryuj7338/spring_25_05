@@ -11,4 +11,17 @@ public class UsrHomeController {
 	public String ShowMain() {
 		return "집가고 싶다";
 	}
+	
+	@RequestMapping("/usr/home/main2")
+	@ResponseBody
+	public String ShowMain2() {
+		return "집 가려면 6시간 20분 남았다..";
+	}
+	
+	@RequestMapping("/usr/home/main3")
+	@ResponseBody
+	public int ShowMain3() {
+		
+		return 10+8;
+	}
 }
