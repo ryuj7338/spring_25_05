@@ -24,4 +24,29 @@ public class UsrHomeController {
 		
 		return 10+8;
 	}
+	
+	int a = 0;
+	@RequestMapping("/usr/home/getCount")
+	@ResponseBody
+	public int getCount() {
+//		int a = 0; 여기다 선언x
+		return a++;
+		
+	}
+	
+	
+	@RequestMapping("/usr/home/setCount")
+	@ResponseBody
+	public int setCount() {
+		a = 0;
+		return a;
+	}
+	
+	@RequestMapping("/usr/home/setCountValue")
+	@ResponseBody
+	public String setCountValue(int value) {
+		this.a = value;
+		return "a의 값을"+ value+"(으)로 초기화";
+	}
+	
 }
