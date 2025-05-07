@@ -19,13 +19,10 @@ import lombok.NoArgsConstructor;
 
 @Controller
 public class UsrArticleController {
-	
-	
-	
+		
 	@Autowired
 	private ArticleService articleService;
 	
-
 
 	// 액션 메서드
 
@@ -95,7 +92,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public List<Article> getArticles() {
 		
-		return articleService.articles;
+		return articleService.getArticles();
 	}
 	
 	
