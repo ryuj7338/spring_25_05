@@ -12,6 +12,7 @@
 		title = #{title},
 		`body` = #{body}
 	</insert>
+	
 
 	<delete id="deleteArticle" parameterType="int">
 		DELETE FROM article
@@ -26,6 +27,11 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<select id="getLastInsertId" parameterType="int">
+		SELECT
+		LAST_INSERT_ID()
+	</select>
 
 	<select id="getArticleId" parameterType="int"
 		resultType="com.example.demo.vo.Article">

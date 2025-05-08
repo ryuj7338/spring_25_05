@@ -9,7 +9,7 @@ public class ResultData {
 	@Getter
 	private String ResultCode;
 	@Getter
-	private Object msg;
+	private String msg;
 	@Getter
 	private Object data;
 	
