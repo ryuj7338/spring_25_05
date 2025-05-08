@@ -33,8 +33,7 @@
 		WHERE id = #{id}
 	</select>
 
-	<select id="getArticles"
-		resultType="com.example.demo.vo.Article">
+	<select id="getArticles" resultType="com.example.demo.vo.Article">
 		SELECT * FROM article
 		ORDER BY id DESC
 	</select>
