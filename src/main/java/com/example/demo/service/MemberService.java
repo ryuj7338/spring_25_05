@@ -23,9 +23,21 @@ public class MemberService {
 	
 	public int doJoin(String loginId, String loginPw, String name) {
 		
+		Member existsMember = getMemberLoginId(loginId);
+		System.out.println("existsMember: "+ existsMember);
+		
+		if(existsMember != null) {
+			return -1;
+		}
+		
+		
 		memberRepository.doJoin(loginId, loginPw, name);
 		
 		return memberRepository.getLastInsertId();
+	}
+	
+	private Member getMemberLoginId(String loginId) {
+		return memberRepository.getMemberLoginId(loginId);
 	}
 	
 	public Member getMemberId(int id) {
