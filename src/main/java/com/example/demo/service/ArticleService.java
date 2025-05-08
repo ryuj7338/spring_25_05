@@ -19,21 +19,10 @@ public class ArticleService {
 	public ArticleService(ArticleRepository articleRepository) {
 
 		this.articleRepository = articleRepository;
-		testData();
-
+		
 	}
 
-	private void testData() {
-
-		for (int i = 1; i <= 10; i++) {
-			String title = "탄지로";
-			String body = "물의 호흡 제" + i + "형";
-
-			articleRepository.writeArticle(title, body);
-
-		}
-
-	}
+	
 
 	public Article writeArticle(String title, String body) {
 
