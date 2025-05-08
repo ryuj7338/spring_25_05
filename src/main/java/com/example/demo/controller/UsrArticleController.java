@@ -19,84 +19,67 @@ import lombok.NoArgsConstructor;
 
 @Controller
 public class UsrArticleController {
-		
+
 	@Autowired
 	private ArticleService articleService;
-	
 
 	// 액션 메서드
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public Article doAdd(String title, String body) {
-		Article article = articleService.writeArticle(title, body);
-		
-		return article;
+
+		return articleService.writeArticle(title, body);
 	}
 
-	
-	
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
-		
+
 		Article article = articleService.getArticleId(id);
-		
-		
+
 		if (article == null) {
-			return id+"번 글은 없습니다.";
+			return id + "번 글은 없습니다.";
 		}
-		
+
 		articleService.deleteArticle(id);
-		
-		
+
 		return id + "번 글이 삭제되었습니다.";
 	}
-	
-	
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-		public Object doModify(int id, String title, String body) {
-		
+	public Object doModify(int id, String title, String body) {
+
 		Article article = articleService.getArticleId(id);
-		
-		
+
 		if (article == null) {
-			return id+"번 글은 없습니다.";
+			return id + "번 글은 없습니다.";
 		}
-		
-		
-		articleService.modifyArticle(id, title, body);		
-		
+
+		articleService.modifyArticle(id, title, body);
+
 		return article;
 	}
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-		public Object getArticle(int id) {
-		
+	public Object getArticle(int id) {
+
 		Article article = articleService.getArticleId(id);
-		
-		
+
 		if (article == null) {
-			return id+"번 글은 없습니다.";
+			return id + "번 글은 없습니다.";
 		}
-			
-		
+
 		return article;
 	}
-	
-	
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
 	public List<Article> getArticles() {
-		
+
 		return articleService.getArticles();
 	}
-	
-	
-	
-	
-}
 
+}
