@@ -1,25 +1,25 @@
 package com.example.demo.vo;
 
-import lombok.Data;
+
 import lombok.Getter;
 
 
-public class ResultData {
+public class ResultData<DT> {
 	
 	@Getter
 	private String ResultCode;
 	@Getter
 	private String msg;
 	@Getter
-	private Object data;
+	private DT data;
 	
 	
 //	오류메세지(자세하게)
-	public static ResultData from(String ResultCode, String msg) {
+	public static <DT> ResultData<DT> from(String ResultCode, String msg) {
 		return from(ResultCode, msg, null);
 	}
 
-	public static ResultData from(String ResultCode, String msg, Object data) {
+	public static <DT> ResultData<DT> from(String ResultCode, String msg, Object data) {
 		ResultData rd = new ResultData();
 		rd.ResultCode = ResultCode;
 		rd.msg = msg;
@@ -38,7 +38,7 @@ public class ResultData {
 		return isSuccess() == false;
 	}
 	
-	public static ResultData newData(ResultData rd, Object newData) {
+	public static <DT> ResultData<DT> newData(ResultData rd, Object newData) {
 		return from(rd.getResultCode(), rd.getMsg(), newData);
 	}
 }
