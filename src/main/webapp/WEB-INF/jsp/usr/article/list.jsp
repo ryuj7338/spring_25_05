@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시글 목록</title>
-</head>
-<body>
-	<h1>게시글 목록</h1>
 
-	<hr />
+<c:set var="pageTitle" value="게시글 목록"></c:set>
+<%@ include file="../common/head.jspf" %>
 
 	<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 		<thead>
@@ -26,7 +19,7 @@
 					<td style="text-align: center;">${article.id}</td>
 					<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
 					<td style="text-align: center;">
-						<a href="detail?id=${article.id }" style="color:inherit; text-decoration: none;">${article.title }</a>
+						<a href="detail?id=${article.id }" style="color:black; text-decoration: none;">${article.title }</a>
 					</td>
 					<td style="text-align: center;">${article.memberId }</td>
 				</tr>
@@ -34,7 +27,7 @@
 		</tbody>
 	</table>
 
-
+<%@ include file="../common/foot.jspf" %>
 
 </body>
 </html>
