@@ -32,9 +32,18 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Integer> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData<Integer> doJoin(HttpSession session, String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
+		boolean isLogined = false;
+		
+		if(session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+		
+		if (isLogined) {
+			return ResultData.from("F-A", "이미 로그인되어 있습니다.");
+		}
 		
 		if (Ut.isEmptyOrNull(loginId)) {
 			return ResultData.from("F-1", "아이디를 입력하세요.");
@@ -107,7 +116,7 @@ public class UsrMemberController {
 		
 		session.setAttribute("loginedMemberId", member.getId());
 		
-		return ResultData.from("loginedMemberId", Ut.f("%s님 환영합니다.", member.getNickname()), member);
+		return ResultData.from("loginedMemberId", Ut.f("S-1", "%s님 환영합니다.", member.getNickname()), member);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")

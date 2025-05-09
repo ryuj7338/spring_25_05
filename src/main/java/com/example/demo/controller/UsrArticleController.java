@@ -83,12 +83,17 @@ public class UsrArticleController {
 		if (article == null) {
 			return  ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
 		}
+		
+		if (article.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-A", "권한이 없습니다.");
+		}
 
 		articleService.deleteArticle(id);
 
 		return ResultData.from("S-1", Ut.f("%d번 글이 삭제되었습니다.", id));
 	}
 
+//	로그인 체크 -> 유무 체크 -> 권한 체크
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData doModify(HttpSession session, int id, String title, String body) {
@@ -107,9 +112,13 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
 		}
 
+		ResultData loginedMemberCanModifyRd = articleService.loginedMemberCanModify(loginedMemberId, article);
+		
 		articleService.modifyArticle(id, title, body);
+		
+		article = articleService.getArticleId(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 글이 수정되었습니다.", id), article);
+		return ResultData.from(loginedMemberCanModifyRd.getResultCode(), loginedMemberCanModifyRd.getMsg(),article);
 	}
 
 	@RequestMapping("/usr/article/getArticle")
