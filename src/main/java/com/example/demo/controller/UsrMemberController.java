@@ -107,8 +107,29 @@ public class UsrMemberController {
 		
 		session.setAttribute("loginedMemberId", member.getId());
 		
-		return ResultData.from("loginedMemberId", Ut.f("%s님 환영합니다.", member.getNickname()));
+		return ResultData.from("loginedMemberId", Ut.f("%s님 환영합니다.", member.getNickname()), member);
 	}
-
+	
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData<Integer> doLogout(HttpSession session, String loginId, String loginPw) {
+		
+		
+		boolean isLogined = false;
+		
+		if (session.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+		}
+		
+		if (!isLogined) {
+			return ResultData.from("F-A", "이미 로그아웃 되어 있습니다.");
+		}
+		
+				
+		session.removeAttribute("loginedMemberId");
+		
+		return ResultData.from("S-1", Ut.f("로그아웃 되었습니다."));
+	}
+	
 	
 }

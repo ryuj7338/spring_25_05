@@ -22,7 +22,7 @@ CREATE TABLE `member` (
 							 `name` CHAR(20) NOT NULL,
 							 nickname CHAR(20) NOT NULL,
 							 cellphoneNum CHAR(20) NOT NULL,
-							 email CHAR(20) NOT NULL,
+							 email CHAR(50) NOT NULL,
 							 delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
 							 delDate DATETIME COMMENT '탈퇴 날짜' 
 );
@@ -91,6 +91,16 @@ nickname = '꼬부기',
 cellphoneNum = '01078787878',
 email = 'kkobugi@gmail.com';
 
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+UPDATE article
+SET memberId = 2
+WHERE id IN(1,2);
+
+UPDATE article
+SET memberId = 3
+WHERE id  = 3;
+
 SELECT *
 FROM article
 ORDER BY id DESC;
@@ -102,17 +112,17 @@ SELECT * FROM `member`;
 
 ######################################################################
 
-SELECT * FROM `member`
-WHERE loginId = 'test4'
+select * from `member`
+where loginId = 'test4'
 
-SELECT CEILING(RAND() * 3);
+select ceiling(RAND() * 3);
 
 # 게시글 데이터 대량 생성
 INSERT INTO article
 SET regDate = NOW(),
-memberId = CEILING(RAND() * 3),
-title = CONCAT('제목__', RAND()),
-`body` = CONCAT('내용__',RAND());
+memberId = ceiling(RAND() * 3),
+title = CONCAT('제목__', rand()),
+`body` = CONCAT('내용__',rand());
 
 
 
