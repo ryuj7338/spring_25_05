@@ -30,7 +30,7 @@ public class UsrArticleController {
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<List<Article>> doWrite(String title, String body) {
+	public ResultData doWrite(String title, String body) {
 
 		if (Ut.isEmptyOrNull(title)) {
 			return ResultData.from("F-1", "제목을 입력하세요.");
@@ -40,13 +40,13 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "내용을 입력하세요.");
 		}
 		
-		ResultData doWriteRd = articleService.writeArticle(title, body);
+		ResultData writeArticleRd = articleService.writeArticle(title, body);
 		
-		int id = (int) doWriteRd.getData();
+		int id = (int) writeArticleRd.getData();
 		
 		Article article = articleService.getArticleId(id);
 		
-		return ResultData.from(doWriteRd.getResultCode(), doWriteRd.getMsg(), article);
+		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
 	}
 	
 
@@ -82,7 +82,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData<List<Article>> getArticle(int id) {
+	public ResultData getArticle(int id) {
 
 		Article article = articleService.getArticleId(id);
 
