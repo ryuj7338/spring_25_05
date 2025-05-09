@@ -32,7 +32,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Integer> doJoin(HttpSession session, String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData<Member> doJoin(HttpSession session, String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
 		boolean isLogined = false;
@@ -76,14 +76,14 @@ public class UsrMemberController {
 			return doJoinRd;
 		}
 		
-		Member member = memberService.getMemberId((int) doJoinRd.getData());
+		Member member = memberService.getMemberId((int) doJoinRd.getData1());
 		
-		return ResultData.newData(doJoinRd, member);
+		return ResultData.newData(doJoinRd, "새로 생성된 member", member);
 	}
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData<Integer> doLogin(HttpSession session, String loginId, String loginPw) {
+	public ResultData<Member> doLogin(HttpSession session, String loginId, String loginPw) {
 		
 		
 		boolean isLogined = false;
@@ -116,7 +116,7 @@ public class UsrMemberController {
 		
 		session.setAttribute("loginedMemberId", member.getId());
 		
-		return ResultData.from("loginedMemberId", Ut.f("S-1", "%s님 환영합니다.", member.getNickname()), member);
+		return ResultData.from("loginedMemberId", Ut.f("S-1", "%s님 환영합니다.", member.getNickname()), "로그인한 회원", member);
 	}
 	
 	@RequestMapping("/usr/member/doLogout")
