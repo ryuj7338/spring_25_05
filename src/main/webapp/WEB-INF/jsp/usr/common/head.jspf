@@ -28,6 +28,7 @@
 				<li><a class="hover:underline" href="/">HOME</a></li>
 				<li><a class="hover:underline" href="../article/list">LIST</a></li>
 				<li><a class="hover:underline" href="../member/login">LOGIN</a></li>
+				<li><a class="hover:underline" href="../member/logout">LOGOUT</a></li>
 			</ul>
 		</div>
 

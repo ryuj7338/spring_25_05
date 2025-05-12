@@ -88,13 +88,14 @@ public class UsrArticleController {
 			return  ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
 		}
 		
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-A", "권한이 없습니다.");
+		ResultData userCanDeleteRd = articleService.userCanDelete(loginedMemberId, article);
+		
+		if(userCanDeleteRd.isSuccess()) {
+			articleService.deleteArticle(id);
 		}
+		
 
-		articleService.deleteArticle(id);
-
-		return ResultData.from("S-1", Ut.f("%d번 글이 삭제되었습니다.", id));
+		return ResultData.from(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), "입력한 id", id);
 	}
 
 //	로그인 체크 -> 유무 체크 -> 권한 체크
@@ -121,6 +122,10 @@ public class UsrArticleController {
 		}
 
 		ResultData userCanModifyRd = articleService.userCanModify(loginedMemberId, article);
+		
+		if(userCanModifyRd.isFail()) {
+			return userCanModifyRd;
+		}
 		
 		articleService.modifyArticle(id, title, body);
 		
