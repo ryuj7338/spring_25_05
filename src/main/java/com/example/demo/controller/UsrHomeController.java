@@ -18,9 +18,7 @@ public class UsrHomeController {
 	
 
 	
-	@RequestMapping("/usr/article/detail")
-	public String showDetail() {
-		return "/usr/article/detail";
-	}
+
+	
 	
 }
