@@ -81,6 +81,11 @@ public class UsrMemberController {
 		return ResultData.newData(doJoinRd, "새로 생성된 member", member);
 	}
 	
+	@RequestMapping("/usr/member/login")
+	public String showLogin() {
+		return "/usr/member/login";
+	}
+	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData<Member> doLogin(HttpSession session, String loginId, String loginPw) {
