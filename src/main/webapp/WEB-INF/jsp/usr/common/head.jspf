@@ -21,7 +21,7 @@
 <body>
 
 	<header>
-		<div class="flex h-20 mx-auto items-center text-3x1">
+		<div class="flex h-30 mx-auto items-center text-3x1 ">
 			<a href="/">LOGO</a>
 			<div class="flex-grow"></div>
 			<ul>
