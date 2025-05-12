@@ -21,8 +21,8 @@
 					<td style="text-align: center;">${article.updateDate}</td>
 					</tr>
 					<tr>
-						<th style="text-align: center;">회원 아이디</th>
-						<td style="text-align: center;">${article.memberId}</td>
+						<th style="text-align: center;">작성자</th>
+						<td style="text-align: center;">${article.extra__writer}</td>
 					</tr>
 					<tr>
 					<th style="text-align: center;">제목</th>
@@ -36,6 +36,8 @@
 		</table>
 	</div class="btns">
 	<button type="button" onclick="history.back();">뒤로가기</button>
+	<a href="../article/modify?id=${article.id }">수정</a>
+	<a href="../article/doDelete?id=${article.id }">삭제</a>
 </section>
 
 <%@ include file="../common/foot.jspf"%>
