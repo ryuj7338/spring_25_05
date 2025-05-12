@@ -31,20 +31,20 @@ CREATE TABLE `member` (
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '제목1',
-`body` = '내용1';
+title = '귀멸의 칼날',
+`body` = '물의 호흡';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '제목2',
-`body` = '내용2';
+title = '포켓몬스터',
+`body` = '피카츄';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '제목3',
-`body` = '내용3';
+title = '짱구는 못말려',
+`body` = '짱구';
 
 
 # 회원 테스트 데이터 생성
@@ -67,9 +67,9 @@ updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
 `name` = '회원1',
-nickname = '피카츄',
+nickname = '탄지로',
 cellphoneNum = '01012341234',
-email = 'pikachyu@gmail.com';
+email = 'tanjiro@gmail.com';
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -77,9 +77,9 @@ updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
 `name` = '회원2',
-nickname = '파이리',
+nickname = '피카츄',
 cellphoneNum = '01056785678',
-email = 'paili@gmail.com';
+email = 'pikachyu@gmail.com';
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -87,18 +87,22 @@ updateDate = NOW(),
 loginId = 'test3',
 loginPw = 'test3',
 `name` = '회원3',
-nickname = '꼬부기',
+nickname = '짱구',
 cellphoneNum = '01078787878',
-email = 'kkobugi@gmail.com';
+email = 'shinJJang@gmail.com';
 
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
 UPDATE article
 SET memberId = 2
-WHERE id IN(1,2);
+WHERE id = 1;
 
 UPDATE article
 SET memberId = 3
+WHERE id = 2;
+
+UPDATE article
+SET memberId = 4
 WHERE id  = 3;
 
 SELECT *
@@ -108,21 +112,31 @@ ORDER BY id DESC;
 SELECT * FROM `member`;
 
 
-
+SELECT A.*, M.nickname AS extra__writer
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE A.id = 1;
+		
+SELECT A.*, M.nickname AS extra__writer 
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		ORDER BY A.id DESC;
 
 ######################################################################
 
-select * from `member`
-where loginId = 'test4'
+SELECT * FROM `member`
+WHERE loginId = 'test4'
 
-select ceiling(RAND() * 3);
+SELECT CEILING(RAND() * 3);
 
 # 게시글 데이터 대량 생성
 INSERT INTO article
 SET regDate = NOW(),
-memberId = ceiling(RAND() * 3),
-title = CONCAT('제목__', rand()),
-`body` = CONCAT('내용__',rand());
+memberId = CEILING(RAND() * 3),
+title = CONCAT('제목__', RAND()),
+`body` = CONCAT('내용__',RAND());
 
 
 
