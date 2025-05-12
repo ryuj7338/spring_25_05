@@ -34,7 +34,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData doWrite(HttpServletRequest req, String title, String body) {
 
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
 			return ResultData.from("F-A", "로그인이 필요합니다.");
@@ -61,17 +61,17 @@ public class UsrArticleController {
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
 
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
-//			return ResultData.from("F-A", "로그인이 필요합니다.");
+
 			return Ut.jsReplace("F-A", "로그인 후 이용하세요.", "../member/login");
 		}
 
 		Article article = articleService.getArticleId(id);
 
 		if (article == null) {
-//			return  ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id));
+
 			return Ut.jsHistoryBack("F-1", Ut.f("%d번 게시글은 없습니다.", id));
 		}
 
@@ -85,7 +85,6 @@ public class UsrArticleController {
 			articleService.deleteArticle(id);
 		}
 
-//		return ResultData.from(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), "입력한 id", id);
 		return Ut.jsReplace(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), ".../article/list");
 	}
 
@@ -94,7 +93,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
 
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (rq.isLogined() == false) {
 			return ResultData.from("F-A", "로그인이 필요합니다.");
@@ -124,7 +123,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
 
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
