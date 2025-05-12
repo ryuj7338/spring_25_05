@@ -11,33 +11,37 @@
 				<tr>
 					<th style="text-align: center;">번호</th>
 					<td style="text-align: center;">${article.id}</td>
-					</tr>
-					<tr>
+				</tr>
+				<tr>
 					<th style="text-align: center;">날짜</th>
 					<td style="text-align: center;">${article.regDate}</td>
-					</tr>
-					<tr>
+				</tr>
+				<tr>
 					<th style="text-align: center;">수정 날짜</th>
 					<td style="text-align: center;">${article.updateDate}</td>
-					</tr>
-					<tr>
-						<th style="text-align: center;">작성자</th>
-						<td style="text-align: center;">${article.extra__writer}</td>
-					</tr>
-					<tr>
+				</tr>
+				<tr>
+					<th style="text-align: center;">작성자</th>
+					<td style="text-align: center;">${article.extra__writer}</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">제목</th>
 					<td style="text-align: center;">${article.title }</td>
-					</tr>
-					<tr>
+				</tr>
+				<tr>
 					<th style="text-align: center;">작성자</th>
 					<td style="text-align: center;">${article.body }</td>
 				</tr>
 			</thead>
 		</table>
 	</div class="btns">
-	<button type="button" onclick="history.back();">뒤로가기</button>
-	<a href="../article/modify?id=${article.id }">수정</a>
-	<a href="../article/doDelete?id=${article.id }">삭제</a>
+			<button type="button" onclick="history.back();">뒤로가기</button>
+
+			<c:if test="${article.userCanModify }">
+					<a href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+
+			<a href="../article/doDelete?id=${article.id }">삭제</a>
 </section>
 
 <%@ include file="../common/foot.jspf"%>
