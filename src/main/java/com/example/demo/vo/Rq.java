@@ -21,14 +21,14 @@ import lombok.Setter;
 @Setter
 public class Rq {
 	
-	private boolean isLogined = false;
-	
-	private int loginedMemberId = 0;
-	
+
 	private final HttpServletRequest req;
 	private final HttpServletResponse resp;
 	private final HttpSession session;
 
+	private boolean isLogined = false;
+	private int loginedMemberId = 0;
+	
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		
 		this.req = req;

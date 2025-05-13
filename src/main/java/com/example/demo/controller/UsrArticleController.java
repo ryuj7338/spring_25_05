@@ -31,19 +31,20 @@ public class UsrArticleController {
 
 	@Autowired
 	private Rq rq;
+	
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, String title, String body) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.isEmptyOrNull(title)) {
-			return ResultData.from("F-1", "제목을 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "제목을 입력하세요.");
 		}
 
 		if (Ut.isEmptyOrNull(body)) {
-			return ResultData.from("F-2", "내용을 입력하세요.");
+			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
 
 		ResultData doWriteRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
@@ -52,11 +53,13 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticleId(id);
 
-		return ResultData.newData(doWriteRd, "새로 작성된 게시글", article);
+		return Ut.jsReplace(doWriteRd.getResultCode(), doWriteRd.getMsg(), "../article/list");
 	}
 	
 	@RequestMapping("/usr/article/write")
 	public String showWrite() {
+			
+		
 		return "/usr/article/write";
 	}
 	
@@ -85,7 +88,7 @@ public class UsrArticleController {
 			articleService.deleteArticle(id);
 		}
 
-		return Ut.jsReplace(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), ".../article/list");
+		return Ut.jsReplace(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), "../article/list");
 	}
 
 //	로그인 체크 -> 유무 체크 -> 권한 체크
