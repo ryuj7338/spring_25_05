@@ -91,20 +91,20 @@ public class UsrArticleController {
 //	로그인 체크 -> 유무 체크 -> 권한 체크
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getArticleId(id);
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다.", id), "없는 글의 id", id);
+			return Ut.jsReplace("F-1", Ut.f("%d번 게시글은 없습니다.", id), "../article/list");
 		}
 
 		ResultData userCanModifyRd = articleService.userCanModify(rq.getLoginedMemberId(), article);
 
 		if (userCanModifyRd.isFail()) {
-			return userCanModifyRd;
+			return Ut.jsHistoryBack(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg());
 		}
 
 		if (userCanModifyRd.isSuccess()) {
@@ -113,11 +113,22 @@ public class UsrArticleController {
 
 		article = articleService.getArticleId(id);
 
-		return ResultData.from(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "수정된 글", article);
+		return Ut.jsReplace(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "../article/detail?id="+id);
 	}
 	
 	@RequestMapping("/usr/article/modify")
-	public String showModify() {
+	public String showModify(HttpServletRequest req, Model model, int id) {
+		
+		Rq rq = (Rq) req.getAttribute("rq");
+		
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		
+		if(article == null) {
+			return Ut.jsHistoryBack("F-1", Ut.f("%번 게시글은 없습니다.", id));
+		}
+		
+		model.addAttribute("article", article);
+		
 		return "/usr/article/modify";
 	}
 
