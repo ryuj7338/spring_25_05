@@ -29,6 +29,8 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
+	@Autowired
+	private Rq rq;
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody

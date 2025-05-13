@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.MemberService;
 import com.example.demo.util.Ut;
-import com.example.demo.vo.Article;
 import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+
 
 
 
@@ -29,8 +28,13 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private Rq rq;
 
-	// 액션 메서드
+	@RequestMapping("/usr/member/join")
+	public String showJoin() {
+		return "/usr/member/join";
+	}
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
@@ -75,7 +79,7 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("/usr/member/login")
-	public String showLogin() {
+	public String showLogin(HttpServletRequest req) {
 		return "/usr/member/login";
 	}
 	

@@ -23,13 +23,18 @@
 	<header>
 		<div class="flex h-24 mx-auto items-center text-3x1">
 			<a href="/">LOGO</a>
-			<div class="flex-grow border border-red-300"></div>
+			<div class="flex-grow border border-blue-300"></div>
 			<ul class="flex">
 				<li><a class="hover:underline" href="/">HOME</a></li>
 				<li><a class="hover:underline" href="../article/list">LIST</a></li>
 				<c:if test="${!rq.isLogined() }">
 					<li>
-						<a class="hover:underline" href="../member/login">LOGIN</a>
+						<a class="hover:underline " href="../member/login">LOGIN</a>
+					</li>
+				</c:if>
+				<c:if test="${!rq.isLogined() }">
+					<li>
+						<a class="hover:underline " href="../member/join">JOIN</a>
 					</li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">

@@ -7,7 +7,7 @@
 
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
-		<form action="../article/doModify" method="POST">
+		<form action="../article/dowrite" method="POST">
 			<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 				<tbody>
 					<tr>
