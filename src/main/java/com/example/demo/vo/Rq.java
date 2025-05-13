@@ -19,11 +19,14 @@ public class Rq {
 	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
+	
+	private HttpSession session;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		
 		this.req = req;
 		this.resp = resp;
+		this.session = req.getSession();
 		
 		HttpSession httpSession = req.getSession();
 		
@@ -33,7 +36,7 @@ public class Rq {
 		}
 	}
 
-//	규칙 (format 없는 상태)
+
 	public void printHistoryBack(String msg) throws IOException {
 		
 		resp.setContentType("text/html; charset=UTF-8");
@@ -58,6 +61,19 @@ public class Rq {
 		
 		resp.getWriter().append(str);
 		
+	}
+
+
+	public void logout() {
+		
+		session.removeAttribute("loginedMemberId");
+		
+	}
+
+
+	public void login(Member member) {
+		
+		session.setAttribute("loginedMemberId", member.getId());
 	}
 	
 }
