@@ -21,11 +21,11 @@
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td style="text-align: center;"><input name="email" autocomplete="off" type="text" placeholder="이메일 " /></td>
+						<td style="text-align: center;"><input name="email" autocomplete="off" type="email" placeholder="이메일 " /></td>
 					</tr>
 					<tr>
 						<th>이름</th>
-						<td style="text-align: center;"><input name="name autocomplete=" off" type="text" placeholder="이름 " /></td>
+						<td style="text-align: center;"><input name="name" autocomplete=" off" type="text" placeholder="이름 " /></td>
 					</tr>
 					<tr>
 						<th>닉네임</th>
@@ -34,7 +34,7 @@
 					</tr>
 					<tr>
 						<th>전화번호</th>
-						<td style="text-align: center;"><input name="cellphone" autocomplete="off" type="text" placeholder="전화번호 " />
+						<td style="text-align: center;"><input name="cellphoneNum" autocomplete="off" type="text" placeholder="010-1234-1234 " />
 						</td>
 					</tr>
 					<tr>

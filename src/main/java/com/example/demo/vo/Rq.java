@@ -12,21 +12,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
+import lombok.Setter;
 
 
 @Component
 @Scope(value = "request", proxyMode= ScopedProxyMode.TARGET_CLASS)
+@Getter
+@Setter
 public class Rq {
 	
-	@Getter
-	private boolean isLogined;
+	private boolean isLogined = false;
 	
-	@Getter
-	private int loginedMemberId;
+	private int loginedMemberId = 0;
 	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
-	
 	private HttpSession session;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
@@ -35,13 +35,12 @@ public class Rq {
 		this.resp = resp;
 		this.session = req.getSession();
 		
-		HttpSession httpSession = req.getSession();
 		
-		if(httpSession.getAttribute("loginedMemberId") != null) {
+		if(session.getAttribute("loginedMemberId") != null) {
 			
 			isLogined = true;
 			
-			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
 		
 		this.req.setAttribute("rq", this);
@@ -55,11 +54,13 @@ public class Rq {
 		println("<script>");
 		
 		if(!Ut.isEmpty(msg)) {
-			println("alert('" + msg + "');");
+			println("alert('" + msg.replace("'", "\\'") + "');");
 		}
 		
 		println("history.back();");
 		println("</script>");
+		resp.getWriter().flush();
+		resp.getWriter().close();
 	}
 
 	private void println(String str) throws IOException {

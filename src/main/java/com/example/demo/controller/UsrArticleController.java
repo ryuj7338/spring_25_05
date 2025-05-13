@@ -54,6 +54,13 @@ public class UsrArticleController {
 
 		return ResultData.newData(doWriteRd, "새로 작성된 게시글", article);
 	}
+	
+	@RequestMapping("/usr/article/write")
+	public String showWrite() {
+		return "/usr/article/write";
+	}
+	
+	
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody

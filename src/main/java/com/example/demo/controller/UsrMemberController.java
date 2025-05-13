@@ -38,44 +38,44 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData<Member> doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public String doJoin(HttpServletRequest req, String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		
 			
 		if (Ut.isEmptyOrNull(loginId)) {
-			return ResultData.from("F-1", "아이디를 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "아이디를 입력하세요.");
 		}
 		
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return ResultData.from("F-1", "비밀번호를 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "비밀번호를 입력하세요.");
 		}
 		
 		if (Ut.isEmptyOrNull(name)) {
-			return ResultData.from("F-1", "이름을 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "이름을 입력하세요.");
 		}
 		
 		if (Ut.isEmptyOrNull(nickname)) {
-			return ResultData.from("F-1", "닉네임을 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "닉네임을 입력하세요.");
 		}
 		
 		if (Ut.isEmptyOrNull(cellphoneNum)) {
-			return ResultData.from("F-1", "전화번호를 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "전화번호를 입력하세요.");
 		}
 		
 		if (Ut.isEmptyOrNull(email)) {
-			return ResultData.from("F-1", "이메일을 입력하세요.");
+			return Ut.jsHistoryBack("F-1", "이메일을 입력하세요.");
 		}
 		
 
-		ResultData doJoinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
-		if (doJoinRd.isFail()) {
-			return doJoinRd;
+		if (joinRd.isFail()) {
+			return Ut.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 		
-		Member member = memberService.getMemberId((int) doJoinRd.getData1());
+		Member member = memberService.getMemberId((int) joinRd.getData1());
 		
-		return ResultData.newData(doJoinRd, "새로 생성된 member", member);
+		return Ut.jsReplace(joinRd.getResultCode(), joinRd.getMsg(), "../member/login");
 	}
 	
 	@RequestMapping("/usr/member/login")
@@ -107,7 +107,7 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-4", "비밀번호가 일치하지 않습니다");
 		}
 		
-		rq.login(member);
+		rq.login(member); 
 		
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다.", member.getNickname()), "/");
 	}
