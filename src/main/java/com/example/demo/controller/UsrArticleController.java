@@ -106,6 +106,11 @@ public class UsrArticleController {
 
 		return ResultData.from(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "수정된 글", article);
 	}
+	
+	@RequestMapping("/usr/article/modify")
+	public String showModify() {
+		return "/usr/article/modify";
+	}
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
