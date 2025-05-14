@@ -63,11 +63,6 @@
 </select>
 
 <div class="join mt-24">
-	<button class="join-horizontal btn">1</button>
-	<button class="join-horizontal btn">2</button>
-	<button class="join-horizontal btn btn-disabled">...</button>
-	<button class="join-horizontal btn">99</button>
-	<button class="join-horizontal btn">100</button>
 	<ul>
 		<c:if test="${rq.isLogined() }">
 			<li><a class="hover:underline" href="../article/write">글쓰기</a></li>

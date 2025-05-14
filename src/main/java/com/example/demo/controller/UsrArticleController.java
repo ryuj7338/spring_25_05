@@ -29,23 +29,22 @@ import lombok.NoArgsConstructor;
 
 @Controller
 public class UsrArticleController {
-	
+
 	private final BeforeActionInterceptor beforeActionInterceptor;
 
 	@Autowired
 	private ArticleService articleService;
-	
+
 	@Autowired
 	private BoardService boardService;
 
 	@Autowired
 	private Rq rq;
-	
+
 	UsrArticleController(BeforeActionInterceptor beforeActionInterceptor) {
 		this.beforeActionInterceptor = beforeActionInterceptor;
 	}
-	
-	
+
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
@@ -60,7 +59,7 @@ public class UsrArticleController {
 		if (Ut.isEmptyOrNull(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
-		
+
 		if (Ut.isEmptyOrNull(boardId)) {
 			return Ut.jsHistoryBack("F-3", "게시판을 선택하세요");
 		}
@@ -73,15 +72,12 @@ public class UsrArticleController {
 
 		return Ut.jsReplace(doWriteRd.getResultCode(), doWriteRd.getMsg(), "../article/list");
 	}
-	
+
 	@RequestMapping("/usr/article/write")
 	public String showWrite() {
-			
-		
+
 		return "/usr/article/write";
 	}
-	
-	
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
@@ -134,22 +130,22 @@ public class UsrArticleController {
 
 		article = articleService.getArticleId(id);
 
-		return Ut.jsReplace(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "../article/detail?id="+id);
+		return Ut.jsReplace(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "../article/detail?id=" + id);
 	}
-	
+
 	@RequestMapping("/usr/article/modify")
 	public String showModify(HttpServletRequest req, Model model, int id) {
-		
+
 		Rq rq = (Rq) req.getAttribute("rq");
-		
+
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		
-		if(article == null) {
+
+		if (article == null) {
 			return Ut.jsHistoryBack("F-1", Ut.f("%번 게시글은 없습니다.", id));
 		}
-		
+
 		model.addAttribute("article", article);
-		
+
 		return "/usr/article/modify";
 	}
 
@@ -166,18 +162,26 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model, @RequestParam(defaultValue = "1") int boardId) {
-		
+	public String showList(HttpServletRequest req, Model model, @RequestParam(defaultValue = "0") int boardId,
+			@RequestParam(defaultValue = "1") int page) {
+
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Board board = boardService.getBoardById(boardId);
-		
-		
+
 		if (board == null) {
-			
+//			return rq.historyBackOnView("존재하지 않는 게시판입니다.");
 		}
 
-		List<Article> articles = articleService.getForPrintArticles(boardId);
+		int articlesCount = articleService.getArticleCount(boardId);
+		
+		int itemsInAPage = 10;
+		
+		
+		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page);
 
+		System.out.println(articles.size());
+		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 

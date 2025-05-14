@@ -33,6 +33,15 @@
 		WHERE id = #{id}
 	</update>
 
+	<select id="getArticleCount" parameterType="int">
+		SELECT COUNT(*) as cnt
+		FROM article
+		WHERE 1
+		<if test="boardId != 0">
+			AND boardId = #{boardId}
+		</if>
+	</select>
+
 	<select id="getLastInsertId" parameterType="int">
 		SELECT
 		LAST_INSERT_ID()
@@ -56,13 +65,22 @@
 
 	<select id="getForPrintArticles"
 		resultType="com.example.demo.vo.Article">
+
 		SELECT A.*, M.nickname AS extra__writer
 		FROM article A
-		INNER JOIN `member` M
+		INNER JOIN
+		`member` M
 		ON A.memberId = M.id
-		WHERE boardId = #{boardId}
+		<where>
+			<if test="boardId != 0 and boardId != null">
+				AND A.boardId = #{boardId}
+			</if>
+		</where>
 		ORDER BY A.id
 		DESC
+		<if test="limitFrom >= 0">
+			LIMIT #{limitFrom}, #{limitTake}
+		</if>
 	</select>
 
 	<select id="getArticles"
