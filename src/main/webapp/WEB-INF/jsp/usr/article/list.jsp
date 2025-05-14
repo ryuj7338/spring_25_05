@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%
+
+%>
 <head>
 <link rel="stylesheet" href="/resource/common.css" />
 <script src="/resource/common.js" defer="defer"></script>
@@ -55,15 +58,28 @@
 	</div>
 </section>
 
+
+<div class="page flex justify-center mt-8">
+	<div class="join">
+		<c:forEach begin="1" end="${pagesCount }" var="i">
+			<a href="?page=${i }" class="join-item btn btn-sqaure ${param.page == i ? 'btn-active' : ''}" type="radio" name="options"
+				aria-label="${i }" checked="checked">${i}</a>
+		</c:forEach>
+	</div>
+
+</div>
+
 <select class="select select-neutral">
-  <option disabled selected>선택</option>
-  <option>제목</option>
-  <option>내용</option>
-  <option>작성자</option>
+	<option disabled selected>선택</option>
+	<option>제목</option>
+	<option>내용</option>
+	<option>작성자</option>
 </select>
 
-<div class="join mt-24">
-	<ul>
+
+
+<div class="join mt-10 ">
+	<ul class="justify-center">
 		<c:if test="${rq.isLogined() }">
 			<li><a class="hover:underline" href="../article/write">글쓰기</a></li>
 		</c:if>

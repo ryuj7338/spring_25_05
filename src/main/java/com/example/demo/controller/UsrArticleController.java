@@ -177,10 +177,12 @@ public class UsrArticleController {
 		
 		int itemsInAPage = 10;
 		
+		int pagesCount = (int) Math.ceil(articlesCount / (double) itemsInAPage);
+		
 		
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page);
 
-		System.out.println(articles.size());
+		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
