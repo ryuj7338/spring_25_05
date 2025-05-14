@@ -93,9 +93,14 @@ public class ArticleService {
 		return articleRepository.getArticleId(id);
 	}
 
-	public List<Article> getArticles(int boardId) {
+	public List<Article> getArticles() {
 
-		return articleRepository.getArticles(boardId);
+		return articleRepository.getArticles();
+	}
+	
+	public List<Article> getForPrintArticles(int boardId) {
+		
+		return articleRepository.getForPrintArticles(boardId);
 	}
 
 }

@@ -168,15 +168,15 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	public String showList(HttpServletRequest req, Model model, @RequestParam(defaultValue = "1") int boardId) {
 		
+		
 		Board board = boardService.getBoardById(boardId);
 		
-
 		
 		if (board == null) {
 			
 		}
 
-		List<Article> articles = articleService.getArticles(boardId);
+		List<Article> articles = articleService.getForPrintArticles(boardId);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

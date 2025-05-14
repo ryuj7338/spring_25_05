@@ -22,17 +22,17 @@
 					</tr>
 					<tr>
 						<th style="text-align: center;">제목</th>
-						<td style="text-align: center;"><input required="required" name="title" type="text" autocomplete="off"
+						<td style="text-align: center;"><input class="input input-primary input-sm" required="required" name="title" type="text" autocomplete="off"
 							placeholder="제목" /></td>
 					</tr>
 					<tr>
 						<th style="text-align: center;">내용</th>
-						<td style="text-align: center;"><input required="required" name="body" type="text" autocomplete="off"
+						<td style="text-align: center;"><input class="input input-primary input-sm" required="required" name="body" type="text" autocomplete="off"
 							placeholder="내용" /></td>
 					</tr>
 					<tr>
 						<th></th>
-						<td style="text-align: center;"><input type="submit" value="등록" /></td>
+						<td style="text-align: center;"><input type="submit" value="작성" /></td>
 					</tr>
 
 				</tbody>

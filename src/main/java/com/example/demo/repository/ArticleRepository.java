@@ -24,9 +24,11 @@ public interface ArticleRepository {
 	public Article getArticleId(int id);
 
 //	@Select("SELECT * FROM article ORDER BY id DESC")
-	public List<Article> getArticles(int boardId);
+	public List<Article> getArticles();
 
 	public int getLastInsertId();
 	
 	public Article getForPrintArticle(int loginedMemberId);
+
+	public List<Article> getForPrintArticles(int boardId);
 }
