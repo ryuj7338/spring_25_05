@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.interceptor.BeforeActionInterceptor;
@@ -48,7 +49,7 @@ public class UsrArticleController {
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, String title, String body, String boardId) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
@@ -59,8 +60,12 @@ public class UsrArticleController {
 		if (Ut.isEmptyOrNull(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요.");
 		}
+		
+		if (Ut.isEmptyOrNull(boardId)) {
+			return Ut.jsHistoryBack("F-3", "게시판을 선택하세요");
+		}
 
-		ResultData doWriteRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
+		ResultData doWriteRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body, boardId);
 
 		int id = (int) doWriteRd.getData1();
 
@@ -161,11 +166,17 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(HttpServletRequest req, Model model, @RequestParam(defaultValue = "1") int boardId) {
 		
 		Board board = boardService.getBoardById(boardId);
+		
 
-		List<Article> articles = articleService.getArticles();
+		
+		if (board == null) {
+			
+		}
+
+		List<Article> articles = articleService.getArticles(boardId);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

@@ -24,9 +24,9 @@ public class ArticleService {
 
 	}
 
-	public ResultData writeArticle(int memberId, String title, String body) {
+	public ResultData writeArticle(int memberId, String title, String body, String boardId) {
 
-		articleRepository.writeArticle(memberId, title, body);
+		articleRepository.writeArticle(memberId, title, body, boardId);
 
 		int id = articleRepository.getLastInsertId();
 
@@ -93,9 +93,9 @@ public class ArticleService {
 		return articleRepository.getArticleId(id);
 	}
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles(int boardId) {
 
-		return articleRepository.getArticles();
+		return articleRepository.getArticles(boardId);
 	}
 
 }

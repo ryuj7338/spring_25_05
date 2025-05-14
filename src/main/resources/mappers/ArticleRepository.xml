@@ -11,6 +11,8 @@
 		regDate = NOW(),
 		updateDate = NOW(),
 		memberId = #{memberId},
+		boardId =
+		#{boardId},
 		title = #{title},
 		`body` = #{body}
 	</insert>
@@ -44,20 +46,33 @@
 		ON A.memberId = M.id
 		WHERE A.id = #{id}
 	</select>
-	
-	<select id="getArticleId" parameterType="int" resultType="com.example.demo.vo.Article">
+
+	<select id="getArticleId" parameterType="int"
+		resultType="com.example.demo.vo.Article">
 		SELECT *
 		FROM article
 		WHERE id = #{id}
 	</select>
 
+	<select id="getForPrintArticles"
+		resultType="com.example.demo.vo.Article">
+		SELECT A.*, M.nickname AS extra__writer
+		FROM article A
+		INNER JOIN `member` M
+		ON A.memberId = M.id
+		WHERE boardId = #{boardId}
+		ORDER BY A.id
+		DESC
+	</select>
+
 	<select id="getArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.nickname AS extra__writer 
+		SELECT A.*, M.nickname AS extra__writer
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
-		ORDER BY A.id DESC
+		ORDER BY A.id
+		DESC
 	</select>
 
 </mapper>

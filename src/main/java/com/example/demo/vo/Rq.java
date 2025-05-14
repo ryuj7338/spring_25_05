@@ -80,4 +80,11 @@ public class Rq {
 	public void initBeforeActionInterceptor() {
 		System.err.println("initBeforeActionInterceptor 실행됨");
 	}
+	
+	public String historyBackOnView(String msg) {
+		
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "usr/common/js";
+	}
 }

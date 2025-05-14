@@ -9,6 +9,10 @@
 		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 			<thead>
 				<tr>
+					<th style="text-align: center;">게시판 번호</th>
+					<td style="text-align: center;">${article.boardId }</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">번호</th>
 					<td style="text-align: center;">${article.id}</td>
 				</tr>
@@ -35,16 +39,16 @@
 			</thead>
 		</table>
 	</div class="btns">
-			<button type="button" onclick="history.back();">뒤로가기</button>
+	<button type="button" onclick="history.back();">뒤로가기</button>
 
-			<c:if test="${article.userCanModify }">
-					<a href="../article/modify?id=${article.id }">수정</a>
-			</c:if>
-			<c:if test="${article.userCanDelete }">
-					<a href="../article/doDelete?id=${article.id }">삭제</a>
-			</c:if>
+	<c:if test="${article.userCanModify }">
+		<a href="../article/modify?id=${article.id }">수정</a>
+	</c:if>
+	<c:if test="${article.userCanDelete }">
+		<a href="../article/doDelete?id=${article.id }">삭제</a>
+	</c:if>
 
-			
+
 </section>
 
 <%@ include file="../common/foot.jspf"%>
