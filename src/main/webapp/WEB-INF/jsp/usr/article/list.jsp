@@ -16,7 +16,7 @@
 <!-- 테일윈드 치트시트 : https://nerdcave.com/tailwind-cheat-sheet -->
 </head>
 
-<c:set var="pageTitle" value="게시글 목록"></c:set>
+<c:set var="pageTitle" value="${board.code } LIST"></c:set>
 
 <%@ include file="../common/head.jspf"%>
 
@@ -28,7 +28,7 @@
 				</ul>
 			</div>
 
-<section class="mt-8 text-xl px-4">
+<section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
 		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 			

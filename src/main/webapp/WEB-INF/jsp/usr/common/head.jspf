@@ -17,6 +17,9 @@
 <!-- 테일윈드 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.4/tailwind.min.css">
 <!-- 테일윈드 치트시트 : https://nerdcave.com/tailwind-cheat-sheet -->
+
+<!-- 데이지 UI -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.12.23/full.css" />
 </head>
 <body>
 
@@ -26,21 +29,24 @@
 			<div class="flex-grow border border-blue-300"></div>
 			<ul class="flex">
 				<li><a class="hover:underline" href="/">HOME</a></li>
-				<li><a class="hover:underline" href="../article/list">LIST</a></li>
+				<li>
+					<div class="dropdown dropdown-hover">
+						<div tabindex="0" role="button">LIST</div>
+						<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+							<li><a href="../article/list?boardId=1">공지사항</a></li>
+							<li><a href="../article/list?boardId=2">자유게시판</a></li>
+							<li><a href="../article/list?boardId=3">Q&A</a></li>
+						</ul>
+				</li>
 				<c:if test="${!rq.isLogined() }">
-					<li>
-						<a class="hover:underline " href="../member/login">LOGIN</a>
-					</li>
+					<li><a class="hover:underline " href="../member/login">LOGIN</a></li>
 				</c:if>
 				<c:if test="${!rq.isLogined() }">
-					<li>
-						<a class="hover:underline " href="../member/join">JOIN</a>
-					</li>
+					<li><a class="hover:underline " href="../member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
-					<li>
-						<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">LOGOUT</a>
-					</li>
+					<li><a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline"
+							href="../member/doLogout">LOGOUT</a></li>
 				</c:if>
 			</ul>
 		</div>

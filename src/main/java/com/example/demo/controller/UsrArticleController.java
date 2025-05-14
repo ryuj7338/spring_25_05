@@ -11,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.service.ArticleService;
+import com.example.demo.service.BoardService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
+import com.example.demo.vo.Board;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
@@ -25,12 +28,22 @@ import lombok.NoArgsConstructor;
 
 @Controller
 public class UsrArticleController {
+	
+	private final BeforeActionInterceptor beforeActionInterceptor;
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private BoardService boardService;
 
 	@Autowired
 	private Rq rq;
+	
+	UsrArticleController(BeforeActionInterceptor beforeActionInterceptor) {
+		this.beforeActionInterceptor = beforeActionInterceptor;
+	}
+	
 	
 	// 액션 메서드
 	@RequestMapping("/usr/article/doWrite")
@@ -148,11 +161,14 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String showList(Model model, int boardId) {
+		
+		Board board = boardService.getBoardById(boardId);
 
 		List<Article> articles = articleService.getArticles();
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("board", board);
 
 		return "/usr/article/list";
 	}

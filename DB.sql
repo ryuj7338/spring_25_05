@@ -27,6 +27,37 @@ CREATE TABLE `member` (
 							 delDate DATETIME COMMENT '탈퇴 날짜' 
 );
 
+# 게시판 테이블 생성
+CREATE TABLE board (
+							 id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+							 regDate DATETIME NOT NULL,
+							 updateDate DATETIME NOT NULL,
+							 `code` CHAR(100) NOT NULL UNIQUE COMMENT '공지사항 자유게시판 Q&A',
+							 `name` CHAR(100) NOT NULL UNIQUE COMMENT '게시판 이름',
+							 delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
+							 delDate DATETIME COMMENT '삭제 날짜' 
+);
+
+# 게시판 테스트 데이터 생성
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = '공지사항',
+`name` = '공지';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = '자유게시판',
+`name` = '자유글';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Q&A',
+`name` = 'Q&A';
+
+
 # 게시글 테스트 데이터 생성
 INSERT INTO article
 SET regDate = NOW(),
@@ -93,6 +124,10 @@ email = 'shinJJang@gmail.com';
 
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
+ALTER TABLE article ADD COLUMN boardId INT(10) NOT NULL AFTER `memberId`;
+
+SELECT * FROM board;
+
 UPDATE article
 SET memberId = 2
 WHERE id = 1;
@@ -104,6 +139,10 @@ WHERE id = 2;
 UPDATE article
 SET memberId = 4
 WHERE id  = 3;
+
+UPDATE article
+SET memberId = 5
+WHERE id = 4;
 
 SELECT *
 FROM article
