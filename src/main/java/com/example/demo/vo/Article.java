@@ -25,4 +25,7 @@ public class Article {
 	private String extra__writer;
 	private boolean userCanModify;
 	public boolean userCanDelete;
+	
+	private String searchKeyword;
+	private String searchType;
 }

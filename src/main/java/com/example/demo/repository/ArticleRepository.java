@@ -2,9 +2,7 @@ package com.example.demo.repository;
 
 import java.util.List;
 
-
 import org.apache.ibatis.annotations.Mapper;
-
 
 import com.example.demo.vo.Article;
 
@@ -27,10 +25,13 @@ public interface ArticleRepository {
 	public List<Article> getArticles();
 
 	public int getLastInsertId();
-	
+
 	public Article getForPrintArticle(int loginedMemberId);
 
 	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake);
-	
-	public int getArticleCount(int boardId);
+
+	public int getArticleCount(int boardId, String searchKeyword, String searchType);
+
+	public List<Article> getForArticles(int boardId, int itemsInAPage, int page, String searchKeyword, String searchType);
+
 }

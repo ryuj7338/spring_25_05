@@ -97,18 +97,16 @@ public class ArticleService {
 
 		return articleRepository.getArticles();
 	}
-	
-	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page) {
-		
-		int limitFrom = (page - 1) * itemsInAPage;
-		int limitTake = itemsInAPage;
-		
-		return articleRepository.getForPrintArticles(boardId, limitFrom, limitTake);
+
+	public List<Article> getForArticles(int boardId, int itemsInAPage, int page, String searchKeyword,
+			String searchType) {
+
+		return articleRepository.getForArticles(boardId, itemsInAPage, page, searchKeyword, searchType);
 	}
 
-	public int getArticleCount(int boardId) {
+	public int getArticleCount(int boardId, String searchKeyword, String searchType) {
 		
-		return articleRepository.getArticleCount(boardId);
+		return articleRepository.getArticleCount(boardId, searchKeyword, searchType);
 	}
 
 }
