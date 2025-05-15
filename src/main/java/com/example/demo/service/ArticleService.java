@@ -112,9 +112,15 @@ public class ArticleService {
 		return articleRepository.getArticleCount(boardId, searchKeyword, searchType);
 	}
 
-	public void increaseHitCount(int id) {
+	public ResultData increaseHitCount(int id) {
 		
-		articleRepository.increaseHitCount(id);
+		int affectedRow = articleRepository.increaseHitCount(id);
+		
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시글은 없습니다.", "id", id);
+		}
+		
+		return ResultData.from("S-1", "조회수 증가", "id", id);
 		
 	}
 

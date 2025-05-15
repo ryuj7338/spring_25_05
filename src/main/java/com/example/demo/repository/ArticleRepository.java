@@ -34,6 +34,6 @@ public interface ArticleRepository {
 
 	public List<Article> getForArticles(int boardId, int limitFrom, int limitTake, String searchKeyword, String searchType);
 
-	public void increaseHitCount(int id);
+	public int increaseHitCount(int id);
 
 }
