@@ -33,12 +33,18 @@
 		WHERE id = #{id}
 	</update>
 
-	<select id="increaseHitCount" parameterType="int">
+	<select id="getArticleHitCount" parameterType="int">
+		SELECT hit
+		FROM article
+		WHERE id = #{id}
+	</select>
+
+	<update id="increaseHitCount" parameterType="int">
 		UPDATE article
 		SET
 		hit = hit + 1
 		WHERE id = #{id}
-	</select>
+	</update>
 
 	<select id="getArticleCount" parameterType="int">
 		SELECT COUNT(*) as cnt

@@ -4,6 +4,29 @@
 <c:set var="pageTitle" value="게시글 상세보기"></c:set>
 <%@ include file="../common/head.jspf"%>
 
+<script>
+	const params = {};
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+function ArticleDetail__doIncreaseHitCount(){
+	$.get('../article/doIncreaseHitCountRd', {
+		id : params.id,
+		ajaxMode: 'Y'
+	}, function(data){
+		console.log(data);
+		console.log(data.data1);
+		console.log(data.msg);
+		$('.article-detail__hit-count').html(data.data1);
+	}, json);
+	
+	$(function() {
+		ArticleDetail__doIncreaseHitCount();
+	})
+}
+</script>
+
 <section class="mt-8 text-x1 px-4">
 	<div class="mx-auto">
 		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
@@ -26,7 +49,8 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">조회수</th>
-					<td style="text-align: center;">${article.hit}</td>
+					<td style="text-align: center;">
+					<span class="article-detail__hit-count">${article.hit }</span></td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">작성자</th>
