@@ -24,6 +24,37 @@
 <%@ include file="../common/head.jspf"%>
 
 
+<div class="join mt-10 ">
+	<ul class="justify-center">
+		<c:if test="${rq.isLogined() }">
+			<li><a class="hover:underline" href="../article/write">글쓰기</a></li>
+		</c:if>
+	</ul>
+</div>
+
+<div class="text-center">
+	<form action="../article/list" method="POST">
+		<div class="inline-flex justify-center mx-auto border border-solid border-blue-400 p-3 rounded-lg">
+			<select class="" name="searchType" data-value="${param.searchType }">
+				<option disabled selected>선택</option>
+				<option value="title">제목</option>
+				<option value="body">내용</option>
+				<option value="nickname">작성자</option>
+			</select>
+			<div class="flex items-center ">
+				<input type="text" placeholder="검색어 입력" class="" name="searchKeyword" value="${param.searcKeyword }" />
+				<button type="submit"  >
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+						class="h-6 w-6  opacity-70">
+  					  <path fill-rule="evenodd"
+							d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+							clip-rule="evenodd" />
+  					</svg>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
@@ -35,6 +66,7 @@
 					<th style="text-align: center;">제목</th>
 					<th style="text-align: center;">작성자</th>
 					<th style="text-align: center;">날짜</th>
+					<th style="text-align: center;">조회수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,6 +77,7 @@
 						</td>
 						<td style="text-align: center;">${article.extra__writer }</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
+						<td style="text-align: center;">${article.hit }</td>
 					</tr>
 				</c:forEach>
 
@@ -59,7 +92,7 @@
 </section>
 
 <!-- 	동적 페이징 -->
-<div class="flex justify-center mt-4">
+<div class="flex justify-center mt-20">
 	<div class="btn-group join ">
 		<c:set var="paginationLen" value="3" />
 		<c:set var="startPage" value="${page - paginationLen >= 1 ? page - paginationLen : 1 }" />
@@ -88,33 +121,23 @@
 	</div>
 </div>
 
-<!-- 정적 페이징-->
+<%-- <!-- 정적 페이징-->
 <div class="page flex justify-center mt-8">
 	<div class="join">
 		<c:forEach begin="1" end="${pagesCount }" var="i">
-			<a href="?page=${i }" class="join-item btn btn-sqaure ${param.page == i ? 'btn-active' : ''}" type="radio"
-				name="options" aria-label="${i }" checked="checked">${i}</a>
+			<a href="?page=${i }&boardId=${param.boardId}"
+				class="join-item btn btn-sqaure ${param.page == i ? 'btn-active' : ''}" type="radio" name="options"
+				aria-label="${i }" checked="checked">${i}</a>
 		</c:forEach>
 	</div>
 
-</div>
-
-<select class="select select-neutral">
-	<option disabled selected>선택</option>
-	<option>제목</option>
-	<option>내용</option>
-	<option>작성자</option>
-</select>
+</div> --%>
 
 
 
-<div class="join mt-10 ">
-	<ul class="justify-center">
-		<c:if test="${rq.isLogined() }">
-			<li><a class="hover:underline" href="../article/write">글쓰기</a></li>
-		</c:if>
-	</ul>
-</div>
+
+
+
 
 
 

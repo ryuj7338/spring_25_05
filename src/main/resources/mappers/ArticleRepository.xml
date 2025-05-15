@@ -33,6 +33,13 @@
 		WHERE id = #{id}
 	</update>
 
+	<select id="increaseHitCount" parameterType="int">
+		UPDATE article
+		SET
+		hit = hit + 1
+		WHERE id = #{id}
+	</select>
+
 	<select id="getArticleCount" parameterType="int">
 		SELECT COUNT(*) as cnt
 		FROM article
@@ -58,7 +65,8 @@
 		</if>
 	</select>
 
-	<select id="getForArticles"  resultType="com.example.demo.vo.Article">
+	<select id="getForArticles"
+		resultType="com.example.demo.vo.Article">
 		SELECT A.*, M.nickname AS extra__writer
 		FROM article AS A
 		INNER JOIN
@@ -77,18 +85,23 @@
 					AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<when test="searchType == 'nickname'">
-					AND M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					AND M.nickname LIKE CONCAT('%', #{searchKeyword},
+					'%')
 				</when>
 				<otherwise>
 					AND (
 					A.title LIKE CONCAT('%', #{searchKeyword}, '%')
-					OR A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
-					OR M.nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR
+					A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR M.nickname LIKE
+					CONCAT('%', #{searchKeyword}, '%')
 					)
 				</otherwise>
 
 			</choose>
 		</if>
+		ORDER BY A.id DESC
+		LIMIT #{limitFrom}, #{limitTake}
 	</select>
 
 	<select id="getLastInsertId" parameterType="int">

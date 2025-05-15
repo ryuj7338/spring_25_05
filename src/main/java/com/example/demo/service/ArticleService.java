@@ -100,13 +100,22 @@ public class ArticleService {
 
 	public List<Article> getForArticles(int boardId, int itemsInAPage, int page, String searchKeyword,
 			String searchType) {
+		
+		int limitFrom = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
 
-		return articleRepository.getForArticles(boardId, itemsInAPage, page, searchKeyword, searchType);
+		return articleRepository.getForArticles(boardId, limitFrom, limitTake, searchKeyword, searchType);
 	}
 
 	public int getArticleCount(int boardId, String searchKeyword, String searchType) {
 		
 		return articleRepository.getArticleCount(boardId, searchKeyword, searchType);
+	}
+
+	public void increaseHitCount(int id) {
+		
+		articleRepository.increaseHitCount(id);
+		
 	}
 
 }

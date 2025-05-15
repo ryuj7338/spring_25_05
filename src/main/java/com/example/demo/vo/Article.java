@@ -21,6 +21,7 @@ public class Article {
 	private int boardId;
 	private String title;
 	private String body;
+	private int hit;
 	
 	private String extra__writer;
 	private boolean userCanModify;
@@ -28,4 +29,6 @@ public class Article {
 	
 	private String searchKeyword;
 	private String searchType;
+	
+	
 }

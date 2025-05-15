@@ -25,6 +25,10 @@
 					<td style="text-align: center;">${article.updateDate}</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">조회수</th>
+					<td style="text-align: center;">${article.hit}</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">작성자</th>
 					<td style="text-align: center;">${article.extra__writer}</td>
 				</tr>
@@ -33,7 +37,7 @@
 					<td style="text-align: center;">${article.title }</td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">작성자</th>
+					<th style="text-align: center;">내용</th>
 					<td style="text-align: center;">${article.body }</td>
 				</tr>
 			</thead>

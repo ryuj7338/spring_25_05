@@ -13,7 +13,7 @@
 					<tr>
 						<th>
 						<td><select name="boardId">
-								<option value="" selected disabled>게시판을 선택해주세요</option>
+								<option value="" selected disabled>게시판 선택</option>
 								<option value="1">공지</option>
 								<option value="2">자유</option>
 								<option value="3">Q&A</option>
