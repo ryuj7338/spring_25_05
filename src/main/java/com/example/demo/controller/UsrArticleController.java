@@ -163,16 +163,15 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doIncreaseHitCountRd")
 	@ResponseBody
-	public ResultData increaseHitCount(int id) {
+	public ResultData doIncreaseHitCount(int id) {
 
 		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
-		
+
 		if (increaseHitCountRd.isFail()) {
 			return increaseHitCountRd;
 		}
-				
 
-		return ResultData.newData(increaseHitCountRd,"hisCount", articleService.getArticleHitCount(id));
+		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
 	}
 
 	@RequestMapping("/usr/article/list")
