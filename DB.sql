@@ -55,6 +55,45 @@ DESC `like`;
 
 SELECT * FROM `like`;
 
+
+# LEFT JOIN(을 해야 전체 게시글에 좋아요를 알 수 있음 / null도 포함)
+# INNER JOIN -> null 제외한 게시글만 나옴
+SELECT A.*, M.nickname AS extra__writer, SUM(L.like) AS `totalLike`,
+FROM article A
+INNER JOIN `member` M
+ON A.memberId = M.id
+LEFT JOIN `like` L
+ON A.id = L.relId AND L.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+#서브쿼리
+SELECT A.*, 
+IFNULL(SUM(L.like), 0) AS `TotalLike`, 
+IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
+IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS `DisLike`
+FROM article A
+LEFT JOIN `like` L
+ON A.id = L.relId AND L.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+
+#JOIN
+SELECT A.*, M.nickname AS extra__writer,
+IFNULL(SUM(L.like), 0) AS TotalLike, 
+IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
+IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS DisLike
+FROM article A
+INNER JOIN `member` M
+ON A.memberId = M.id
+LEFT JOIN `like` L
+ON A.id = L.relId AND L.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+
+
 # 좋아요 테스트 데이터 생성
 # 1번 회원이 1번 글에 싫어요
 INSERT INTO `like`

@@ -47,13 +47,26 @@
 					<th style="text-align: center;">수정 날짜</th>
 					<td style="text-align: center;">${article.updateDate}</td>
 				</tr>
+
+				<tr>
+					<th style="text-align: center;">작성자</th>
+					<td style="text-align: center;">${article.extra__writer}</td>
+				</tr>
 				<tr>
 					<th style="text-align: center;">조회수</th>
 					<td style="text-align: center;"><span class="article-detail__hit-count">${article.hit }</span></td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">작성자</th>
-					<td style="text-align: center;">${article.extra__writer}</td>
+					<th style="text-align: center;">좋아요</th>
+					<td style="text-align: center;">${article.like}</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">싫어요</th>
+					<td style="text-align: center;">${article.dislike}</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">총 좋아요 개수</th>
+					<td style="text-align: center;">${article.totalLike}</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">제목</th>

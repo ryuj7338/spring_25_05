@@ -120,11 +120,16 @@
 
 	<select id="getForPrintArticle" parameterType="int"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.nickname AS extra__writer
-		FROM article AS A
-		INNER JOIN `member` AS M
+		SELECT A.*, M.nickname AS extra__writer,
+		IFNULL(SUM(L.like), 0) AS TotalLike,
+		IFNULL(SUM(IF(L.like &gt; 0, L.like , 0)), 0) AS `Like`,
+		IFNULL(SUM(IF(L.like &lt; 0 , L.like, 0)), 0) AS DisLike
+		FROM article A
+		INNER JOIN `member` M
 		ON A.memberId = M.id
-		WHERE A.id = #{id}
+		LEFT JOIN `like` L
+		ON A.id = L.relId AND L.relTypeCode = 'article'
+		WHERE A.id = #{id};
 	</select>
 
 	<select id="getArticleId" parameterType="int"
