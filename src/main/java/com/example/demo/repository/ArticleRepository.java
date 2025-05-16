@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.vo.Article;
+import com.example.demo.vo.ResultData;
 
 @Mapper
 public interface ArticleRepository {
@@ -32,7 +33,8 @@ public interface ArticleRepository {
 
 	public int getArticleCount(int boardId, String searchKeyword, String searchType);
 
-	public List<Article> getForArticles(int boardId, int limitFrom, int limitTake, String searchKeyword, String searchType);
+	public List<Article> getForArticles(int boardId, int limitFrom, int limitTake, String searchKeyword,
+			String searchType);
 
 	public int increaseHitCount(int id);
 

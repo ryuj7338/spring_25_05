@@ -65,6 +65,18 @@
 				</tr>
 			</thead>
 		</table>
+
+		<div class="text-center mt-6">
+			<form action="../article/detail" method="POST">
+				<div class="inline-flex justify-center  items-center mx-auto border border-solid border-blue-400 p-3 rounded-lg">
+					<div class="px-2">${article.extra__writer }</div>
+					<input type="text" placeholder="댓글 입력" class="px-6" name="comment" />
+					<button type="submit" class="px-2">등록</button>
+				</div>
+		</div>
+		</form>
+	</div>
+
 	</div class="btns">
 	<button type="button" onclick="history.back();">뒤로가기</button>
 

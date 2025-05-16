@@ -35,16 +35,19 @@
 
 	<select id="getArticleHitCount" parameterType="int">
 		SELECT hit
-		FROM article
+		FROM
+		article
 		WHERE id = #{id}
 	</select>
 
 	<update id="increaseHitCount" parameterType="int">
-		UPDATE article
+		UPDATE `article`
 		SET
 		hit = hit + 1
 		WHERE id = #{id}
 	</update>
+
+
 
 	<select id="getArticleCount" parameterType="int">
 		SELECT COUNT(*) as cnt
@@ -91,17 +94,17 @@
 					AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<when test="searchType == 'nickname'">
-					AND M.nickname LIKE CONCAT('%', #{searchKeyword},
-					'%')
+					AND M.nickname LIKE CONCAT('%',
+					#{searchKeyword},'%')
 				</when>
 				<otherwise>
-					AND (
+					AND
 					A.title LIKE CONCAT('%', #{searchKeyword}, '%')
 					OR
-					A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+					A.`body` LIKE CONCAT('%',#{searchKeyword}, '%')
 					OR M.nickname LIKE
 					CONCAT('%', #{searchKeyword}, '%')
-					)
+
 				</otherwise>
 
 			</choose>

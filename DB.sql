@@ -38,6 +38,69 @@ CREATE TABLE board (
 							 delDate DATETIME COMMENT '삭제 날짜' 
 );
 
+# 좋아요 테이블 생성
+CREATE TABLE `like` ( 
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL, 
+	memberId INT(10) UNSIGNED NOT NULL,
+	relTypeCode CHAR(100) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+	`like` INT(10) NOT NULL
+	);
+
+ALTER TABLE `like` MODIFY COLUMN `like` INT(10) NOT NULL AFTER relId;
+
+DESC `like`;
+
+SELECT * FROM `like`;
+
+# 좋아요 테스트 데이터 생성
+# 1번 회원이 1번 글에 싫어요
+INSERT INTO `like`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 1,
+`like` = -1;
+
+#1번 회원이 2번 글에 좋아요
+INSERT INTO `like`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`like` = 1;
+
+#2번 회원이 1번 글에 싫어요
+INSERT INTO `like`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`like` = -1;
+
+#2번 회원이 2번 글에 싫어요
+INSERT INTO `like`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 2,
+`like` = -1;
+
+#3번 회원이 1번 글에 좋아요
+INSERT INTO `like`
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`like` = 1;
+
 # 게시판 테스트 데이터 생성
 INSERT INTO board
 SET regDate = NOW(),
@@ -97,7 +160,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
-`name` = '회원1',
+`name` = '탄지로',
 nickname = '탄지로',
 cellphoneNum = '01012341234',
 email = 'tanjiro@gmail.com';
@@ -107,7 +170,7 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
-`name` = '회원2',
+`name` = '피카츄',
 nickname = '피카츄',
 cellphoneNum = '01056785678',
 email = 'pikachyu@gmail.com';
@@ -117,13 +180,25 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test3',
 loginPw = 'test3',
-`name` = '회원3',
+`name` = '짱구',
 nickname = '짱구',
 cellphoneNum = '01078787878',
 email = 'shinJJang@gmail.com';
 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test4',
+loginPw = 'test4',
+`name` = '맹구',
+nickname = '맹구',
+cellphoneNum = '01022222222',
+email = 'maenggu@gmail.com';
+
+## 멤버 아이디 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
 
+## 게시판 번호 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) NOT NULL AFTER `memberId`;
 
 SELECT * FROM board;
@@ -150,6 +225,34 @@ ORDER BY id DESC;
 
 SELECT * FROM `member`;
 
+UPDATE article
+SET boardId = 2;
+
+# 검색
+# 개수
+SELECT COUNT(*)
+FROM article
+WHERE boardId = 2 AND title LIKE '%asd%'
+OR `body` LIKE '%asd%';
+
+
+# 모두 보여주기
+SELECT *
+FROM article
+WHERE boardId =  AND title LIKE '%귀%';
+
+#조회수 추가
+ALTER TABLE article ADD COLUMN hit INT(10) NOT NULL;
+
+UPDATE article
+		SET
+		hit = hit + 1
+		WHERE id = 1;
+
+
+
+
+###########################
 
 SELECT A.*, M.nickname AS extra__writer
 		FROM article AS A
@@ -222,3 +325,14 @@ SET updateDate = NOW(),
  title = 'title1',
  `body` = 'body1'
 WHERE id = 5;
+
+
+SELECT A.*, M.nickname
+FROM article A
+INNER JOIN `member` M
+ON A.memberId = M.id
+WHERE M.nickname LIKE '%구%'
+
+DESC article
+
+ALTER TABLE article MODIFY COLUMN hit INT(10) NOT NULL DEFAULT 0;

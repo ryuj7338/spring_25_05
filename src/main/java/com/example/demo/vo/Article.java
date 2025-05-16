@@ -23,6 +23,12 @@ public class Article {
 	private String body;
 	private int hit;
 	
+//	좋아요 & 싫어요
+	private String like;
+	private String dislike;
+	private String totalLike;
+	
+	
 	private String extra__writer;
 	private boolean userCanModify;
 	public boolean userCanDelete;
