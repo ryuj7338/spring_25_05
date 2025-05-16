@@ -129,4 +129,16 @@ public class ArticleService {
 		return articleRepository.getArticleHitCount(id);
 	}
 
+	public ResultData increaseLikeCount(int id) {
+		
+		int affectedCount = articleRepository.increaseLikeCount(id);
+		
+		return ResultData.from("S-1", "좋아요 수 증가", "id", id);
+	}
+
+	public Object getArticleLikeCount(int id) {
+		
+		return articleRepository.getArticleLikeCount(id);
+	}
+
 }

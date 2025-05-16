@@ -48,6 +48,20 @@
 	</update>
 
 
+	<select id="getArticleLikeCount" parameterType="int">
+		SELECT `like`
+		FROM
+		`like`
+		WHERE id = #{id}
+	</select>
+
+	<update id="increaseLikeCount" parameterType="int">
+		UPDATE `like`
+		SET
+		`like` = `like` + 1
+		WHERE id = #{id}
+	</update>
+
 
 	<select id="getArticleCount" parameterType="int">
 		SELECT COUNT(*) as cnt
@@ -76,11 +90,13 @@
 
 	<select id="getForArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.nickname AS extra__writer
-		FROM article AS A
-		INNER JOIN
-		`member` AS M
+		SELECT A.*, M.nickname AS extra__writer,
+		IFNULL(SUM(L.like), 0) AS TotalLike
+		FROM article A
+		INNER JOIN `member` M
 		ON A.memberId = M.id
+		LEFT JOIN `like` L
+		ON A.id = L.relId AND L.relTypeCode = 'article'
 		WHERE 1
 		<if test="boardId != 0">
 			AND A.boardId = #{boardId}
@@ -109,6 +125,7 @@
 
 			</choose>
 		</if>
+		GROUP BY A.id
 		ORDER BY A.id DESC
 		LIMIT #{limitFrom}, #{limitTake}
 	</select>
@@ -139,25 +156,6 @@
 		WHERE id = #{id}
 	</select>
 
-	<select id="getForPrintArticles"
-		resultType="com.example.demo.vo.Article">
-
-		SELECT A.*, M.nickname AS extra__writer
-		FROM article A
-		INNER JOIN
-		`member` M
-		ON A.memberId = M.id
-		<where>
-			<if test="boardId != 0 and boardId != null">
-				AND A.boardId = #{boardId}
-			</if>
-		</where>
-		ORDER BY A.id
-		DESC
-		<if test="limitFrom >= 0">
-			LIMIT #{limitFrom}, #{limitTake}
-		</if>
-	</select>
 
 	<select id="getArticles"
 		resultType="com.example.demo.vo.Article">

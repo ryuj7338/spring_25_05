@@ -67,6 +67,7 @@
 					<th style="text-align: center;">작성자</th>
 					<th style="text-align: center;">날짜</th>
 					<th style="text-align: center;">조회수</th>
+					<th style="text-align: center;">좋아요</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -78,6 +79,7 @@
 						<td style="text-align: center;">${article.extra__writer }</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
 						<td style="text-align: center;">${article.hit }</td>
+						<td style="text-align: center;">${article.totalLike }</td>
 					</tr>
 				</c:forEach>
 

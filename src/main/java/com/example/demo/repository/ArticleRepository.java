@@ -36,8 +36,16 @@ public interface ArticleRepository {
 	public List<Article> getForArticles(int boardId, int limitFrom, int limitTake, String searchKeyword,
 			String searchType);
 
+//	조회수
 	public int increaseHitCount(int id);
 
 	public int getArticleHitCount(int id);
 
+//	좋아요
+	public int increaseLikeCount(int id);
+
+	public int getArticleLikeCount(int id);
+
+// 싫어요
+	
 }

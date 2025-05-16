@@ -27,6 +27,24 @@
 	})
 </script>
 
+<script>
+	function ArticleDetail__doIncreaseLikeCount() {
+		$.get('../aritlce/doIncreaseLikeCountRd', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			console.log(data);
+			console.log(data.data1);
+			console.log(data.msg);
+			$('.article-detail__like-count').html(data.data1);
+		}, 'json');
+	}
+	
+	$(function() {
+		ArticleDetail__doIncreaseLikeCount();
+	})
+</script>
+
 <section class="mt-8 text-x1 px-4">
 	<div class="mx-auto">
 		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
@@ -58,7 +76,7 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">좋아요</th>
-					<td style="text-align: center;">${article.like}</td>
+					<td style="text-align: center;"><button class="like-btn fa-thin fa-thumbs-up" onclick="article-detail__like-count">좋아요</button>${article.like}</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">싫어요</th>

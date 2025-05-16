@@ -174,7 +174,18 @@ public class UsrArticleController {
 		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
 	}
 
+	@RequestMapping("/usr/article/doIncreaseLikeCountRd")
+	@ResponseBody
+	public ResultData doIncreaseLikeCount(int id) {
 
+		ResultData increaseLikeCountRd = articleService.increaseLikeCount(id);
+
+		if (increaseLikeCountRd.isFail()) {
+			return increaseLikeCountRd;
+		}
+
+		return ResultData.newData(increaseLikeCountRd, "hitCount", articleService.getArticleLikeCount(id));
+	}
 	
 	
 	
@@ -198,7 +209,7 @@ public class UsrArticleController {
 		
 		
 		List<Article> articles = articleService.getForArticles(boardId, itemsInAPage, page, searchKeyword, searchType);
-		System.out.println(articles.size());
+		
 
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("searchType", searchType);

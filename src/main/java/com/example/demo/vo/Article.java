@@ -26,7 +26,7 @@ public class Article {
 //	좋아요 & 싫어요
 	private String like;
 	private String dislike;
-	private String totalLike;
+	private int totalLike;
 	
 	
 	private String extra__writer;
