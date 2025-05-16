@@ -29,7 +29,7 @@
 
 <script>
 	function ArticleDetail__doIncreaseLikeCount() {
-		$.get('../aritlce/doIncreaseLikeCountRd', {
+		$.get('../article/doIncreaseLikeCountRd', {
 			id : params.id,
 			ajaxMode : 'Y'
 		}, function(data) {
@@ -39,8 +39,8 @@
 			$('.article-detail__like-count').html(data.data1);
 		}, 'json');
 	}
-	
-	$(function() {
+
+	$('.like-btn').click(function() {
 		ArticleDetail__doIncreaseLikeCount();
 	})
 </script>
@@ -76,7 +76,7 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">좋아요</th>
-					<td style="text-align: center;"><button class="like-btn fa-thin fa-thumbs-up" onclick="article-detail__like-count">좋아요</button>${article.like}</td>
+					<td style="text-align: center;"><button class="article-detail__like-count like-btn" onclick="ArticleDetail__doIncreaseLikeCount()">${article.like }</button></td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">싫어요</th>

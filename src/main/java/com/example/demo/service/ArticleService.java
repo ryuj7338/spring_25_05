@@ -133,6 +133,10 @@ public class ArticleService {
 		
 		int affectedCount = articleRepository.increaseLikeCount(id);
 		
+		if(affectedCount == 0) {
+			
+		}
+		
 		return ResultData.from("S-1", "좋아요 수 증가", "id", id);
 	}
 
