@@ -159,8 +159,11 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+		
+		int usersReaction = reactionService.usersReaction(rq.getLoginedMemberId(), "article", id);
 
 		model.addAttribute("article", article);
+		model.addAttribute("usersReaction", usersReaction);
 
 		return "/usr/article/detail";
 	}

@@ -129,4 +129,14 @@ public class ArticleService {
 		return articleRepository.getArticleHitCount(id);
 	}
 
+	public ResultData increaseLikeReaction(int relId) {
+		
+		int affectedRow = articleRepository.increaseLikeReaction(relId);
+		
+		if(affectedRow == 0) {
+			return ResultData.from("F-1", "없는 게시글입니다.");
+		}
+		
+		return ResultData.from(null, null);
+	}
 }

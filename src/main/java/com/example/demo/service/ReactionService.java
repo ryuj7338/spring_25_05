@@ -12,11 +12,14 @@ public class ReactionService {
 	@Autowired
 	private ReactionRepository reactionRepository;
 	
+	@Autowired
+	private ArticleService articleService;
+	
 	public ReactionService(ReactionRepository reactionRepository) {
 		this.reactionRepository = reactionRepository;
 	}
 	
-	public int userCanReaction(int loginedMemberId, String relTypeCode, int relId) {
+	public int usersReaction(int loginedMemberId, String relTypeCode, int relId) {
 		
 //		로그인 x
 		if(loginedMemberId == 0) {
@@ -34,6 +37,12 @@ public class ReactionService {
 			return ResultData.from("F-2", "좋아요 실패");
 		}
 		
-		return ResultData.from("S-1", "좋아요 성공");
+		switch (relTypeCode) {
+		case "article":
+			articleService.increaseLikeReaction(relId);
+			break;
+		}
+		
+		return ResultData.from("S-1", "좋아요!");
 	}
 }

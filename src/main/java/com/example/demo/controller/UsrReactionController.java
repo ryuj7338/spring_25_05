@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ReactionService;
 import com.example.demo.util.Ut;
@@ -27,9 +28,10 @@ public class UsrReactionController {
 	}
 	
 	@RequestMapping("/usr/reaction/doLike")
+	@ResponseBody
 	public String doLike(HttpServletRequest req, String relTypeCode, int relId, String replaceUri) {
 		
-		int usersReaction = reactionService.userCanReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+		int usersReaction = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 		
 		if(usersReaction == 1) {
 			return Ut.jsHistoryBack("F-1", "이미 좋아요 눌렀습니다.");

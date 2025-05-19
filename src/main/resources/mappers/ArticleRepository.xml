@@ -48,18 +48,10 @@
 	</update>
 
 
-	<select id="getArticleLikeCount" parameterType="int">
-		SELECT `like`
-		FROM
-		`like`
-		WHERE id = #{id}
-	</select>
-
-	<update id="increaseLikeCount" parameterType="int">
-		UPDATE `like`
-		SET
-		`like` = `like` + 1
-		WHERE id = #{id}
+	<update id="increaseLikeReaction" parameterType="int">
+		UPDATE article
+		SET `like` = `like` + 1
+		WHERE id =#{relId}
 	</update>
 
 
@@ -90,7 +82,7 @@
 
 	<select id="getForArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.nickname AS extra__writer		
+		SELECT A.*, M.nickname AS extra__writer
 		FROM article A
 		INNER JOIN `member` M
 		ON A.memberId = M.id
@@ -136,7 +128,8 @@
 		resultType="com.example.demo.vo.Article">
 		SELECT A.*, M.nickname AS extra__writer
 		FROM article A
-		INNER JOIN `member` M
+		INNER
+		JOIN `member` M
 		ON A.memberId = M.id
 		WHERE A.id = #{id};
 	</select>
