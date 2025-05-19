@@ -72,13 +72,12 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">좋아요 / 싫어요 ${usersReaction }</th>
-					<td style="text-align: center;">
-						<a href="/usr/reaction/doLike?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
-							class="btn btn-outline btn-success">LIKE👍 ${article.like }</a>
-						<a href="/usr/reaction/doDislike" class="btn btn-outline btn-error">DISLIKE👎
-							${article.dislike }</a>
-					<button></button>
-					</td>
+					<td style="text-align: center;"><a
+							href="/usr/reaction/doLike?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
+							class="btn btn-outline btn-success">LIKE👍 ${article.like }</a> <a
+							href="/usr/reaction/doDislike?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
+							class="btn btn-outline btn-error">DISLIKE👎 ${article.dislike }</a>
+						<button></button></td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">제목</th>

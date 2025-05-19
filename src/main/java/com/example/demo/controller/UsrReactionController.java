@@ -15,30 +15,63 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class UsrReactionController {
 
-	private final UsrArticleController usrArticleController;
-	
 	@Autowired
 	private Rq rq;
-	
+
 	@Autowired
 	private ReactionService reactionService;
-	
-	UsrReactionController(UsrArticleController usrArticleController){
-		this.usrArticleController = usrArticleController;
-	}
-	
+
 	@RequestMapping("/usr/reaction/doLike")
 	@ResponseBody
-	public String doLike(HttpServletRequest req, String relTypeCode, int relId, String replaceUri) {
-		
-		int usersReaction = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-		
-		if(usersReaction == 1) {
-			return Ut.jsHistoryBack("F-1", "이미 좋아요 눌렀습니다.");
+	public Object doLike(String relTypeCode, int relId, String replaceUri) {
+
+		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+		int usersReaction = (int) usersReactionRd.getData1();
+
+		if (usersReaction == 1) {
+			ResultData rd = reactionService.deleteLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+			return Ut.jsReplace("S-1", "좋아요 취소", replaceUri);
+		} else if (usersReaction == -1) {
+			ResultData rd = reactionService.deleteDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+			rd = reactionService.addLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+			return Ut.jsReplace("S-2", "싫어요 취소", replaceUri);
 		}
-		
-		ResultData reactionRd = reactionService.increaseReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-		
+
+		ResultData reactionRd = reactionService.addLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+		if (reactionRd.isFail()) {
+			return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg());
+		}
+
+		return Ut.jsReplace(reactionRd.getResultCode(), reactionRd.getMsg(), replaceUri);
+	}
+
+	@RequestMapping("/usr/reaction/doDislike")
+	@ResponseBody
+	public Object doDislike(String relTypeCode, int relId, String replaceUri) {
+
+		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+		int usersReaction = (int) usersReactionRd.getData1();
+
+		if (usersReaction == -1) {
+			ResultData rd = reactionService.deleteDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+			return Ut.jsReplace("S-1", "싫어요 취소", replaceUri);
+		} else if (usersReaction == 1) {
+			ResultData rd = reactionService.deleteLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+			rd = reactionService.addDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+			return Ut.jsReplace("S-2", "좋아요 취소", replaceUri);
+		}
+
+		ResultData reactionRd = reactionService.addDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+
+		if (reactionRd.isFail()) {
+			return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg());
+		}
+
 		return Ut.jsReplace(reactionRd.getResultCode(), reactionRd.getMsg(), replaceUri);
 	}
 }

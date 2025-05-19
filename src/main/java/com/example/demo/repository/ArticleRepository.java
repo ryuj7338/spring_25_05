@@ -38,10 +38,12 @@ public interface ArticleRepository {
 
 //	조회수
 	public int increaseHitCount(int id);
-
 	public int getArticleHitCount(int id);
 
 // 좋아요
 	public int increaseLikeReaction(int relId);
-	
+	public int decreaseLikeReaction(int relId);
+// 싫어요
+	public int increaseDislikeReaction(int relId);
+	public int decreaseDislikeReaction(int relId);
 }

@@ -160,10 +160,16 @@ public class UsrArticleController {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
-		int usersReaction = reactionService.usersReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), "article", id);
 
+		if(usersReactionRd.isSuccess()) {
+			model.addAttribute("userCanMakeReaction", usersReactionRd.isSuccess());
+		}
+		
 		model.addAttribute("article", article);
-		model.addAttribute("usersReaction", usersReaction);
+		model.addAttribute("isAlreadyAddLikeRp", reactionService.isAlreadyAddLikeRp(rq.getLoginedMemberId(), id, "article"));
+		model.addAttribute("isAlreadyAddDislikeRp", reactionService.isAlreadyAddDislikeRp(rq.getLoginedMemberId(), id, "article"));
+		
 
 		return "/usr/article/detail";
 	}

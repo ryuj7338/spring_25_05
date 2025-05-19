@@ -51,7 +51,27 @@
 	<update id="increaseLikeReaction" parameterType="int">
 		UPDATE article
 		SET `like` = `like` + 1
-		WHERE id =#{relId}
+		WHERE id = #{relId}
+	</update>
+
+	<update id="increaseDislikeReaction" parameterType="int">
+		UPDATE
+		article
+		SET dislike = dislike + 1
+		WHERE id = #{relId}
+	</update>
+
+	<update id="decreaseLikeReaction" parameterType="int">
+		UPDATE article
+		SET `like` = `like` - 1
+		WHERE id = #{relId}
+	</update>
+
+	<update id="decreaseDislikeReaction" parameterType="int">
+		UPDATE
+		article
+		SET dislike = dislike - 1
+		WHERE id = #{relId}
 	</update>
 
 
@@ -84,7 +104,8 @@
 		resultType="com.example.demo.vo.Article">
 		SELECT A.*, M.nickname AS extra__writer
 		FROM article A
-		INNER JOIN `member` M
+		INNER JOIN
+		`member` M
 		ON A.memberId = M.id
 		WHERE 1
 		<if test="boardId != 0">

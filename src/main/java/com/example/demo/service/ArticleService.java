@@ -100,7 +100,7 @@ public class ArticleService {
 
 	public List<Article> getForArticles(int boardId, int itemsInAPage, int page, String searchKeyword,
 			String searchType) {
-		
+
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
@@ -108,12 +108,12 @@ public class ArticleService {
 	}
 
 	public int getArticleCount(int boardId, String searchKeyword, String searchType) {
-		
+
 		return articleRepository.getArticleCount(boardId, searchKeyword, searchType);
 	}
 
 	public ResultData increaseHitCount(int id) {
-		
+
 		int affectedRow = articleRepository.increaseHitCount(id);
 
 		if (affectedRow == 0) {
@@ -123,20 +123,53 @@ public class ArticleService {
 		return ResultData.from("S-1", "조회수 증가", "id", id);
 	}
 
-
 	public Object getArticleHitCount(int id) {
-		
+
 		return articleRepository.getArticleHitCount(id);
 	}
 
 	public ResultData increaseLikeReaction(int relId) {
-		
+
 		int affectedRow = articleRepository.increaseLikeReaction(relId);
-		
-		if(affectedRow == 0) {
-			return ResultData.from("F-1", "없는 게시글입니다.");
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "없는 게시물입니다.");
 		}
-		
-		return ResultData.from(null, null);
+
+		return ResultData.from("S-1", "좋아요 증가", "affectedRow", affectedRow);
 	}
+
+	public ResultData decreaseLikeReaction(int relId) {
+
+		int affectedRow = articleRepository.decreaseLikeReaction(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "없는 게시물입니다.");
+		}
+
+		return ResultData.from("S-1", "좋아요 감소", "affectedRow", affectedRow);
+	}
+	
+	public ResultData increaseDislikeReaction(int relId) {
+
+		int affectedRow = articleRepository.increaseDislikeReaction(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "없는 게시물입니다.");
+		}
+
+		return ResultData.from("S-1", "싫어요 증가", "affectedRow", affectedRow);
+	}
+	
+	public ResultData decreaseDislikeReaction(int relId) {
+
+		int affectedRow = articleRepository.decreaseDislikeReaction(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "없는 게시물입니다.");
+		}
+
+		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
+	}
+	
 }
