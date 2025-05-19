@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.ReactionService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -37,6 +38,9 @@ public class UsrArticleController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReactionService reactionService;
 
 	@Autowired
 	private Rq rq;
@@ -174,19 +178,6 @@ public class UsrArticleController {
 		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
 	}
 
-	@RequestMapping("/usr/article/doIncreaseLikeCountRd")
-	@ResponseBody
-	public ResultData doIncreaseLikeCount(int id) {
-
-		ResultData increaseLikeCountRd = articleService.increaseLikeCount(id);
-
-		if (increaseLikeCountRd.isFail()) {
-			return increaseLikeCountRd;
-		}
-
-		return ResultData.newData(increaseLikeCountRd, "hitCount", articleService.getArticleLikeCount(id));
-	}
-	
 	
 	
 	@RequestMapping("/usr/article/list")

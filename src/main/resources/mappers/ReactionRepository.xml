@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.repository.ReactionRepository">
+
+	<select id="getSumReaction">
+		SELECT IFNULL(SUM(L.like), 0)
+		FROM `like` L
+		WHERE L.reltypeCode = #{relTypeCode}
+		AND L.relId = #{relId}
+		AND L.memberId = #{memberId}
+	</select>
+
+
+
+</mapper>

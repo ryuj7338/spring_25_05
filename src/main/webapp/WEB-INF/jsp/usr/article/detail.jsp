@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <c:set var="pageTitle" value="게시글 상세보기"></c:set>
 <%@ include file="../common/head.jspf"%>
+
 
 <script>
 	const params = {};
@@ -28,21 +31,14 @@
 </script>
 
 <script>
-	function ArticleDetail__doIncreaseLikeCount() {
-		$.get('../article/doIncreaseLikeCountRd', {
-			id : params.id,
-			ajaxMode : 'Y'
-		}, function(data) {
-			console.log(data);
-			console.log(data.data1);
-			console.log(data.msg);
-			$('.article-detail__like-count').html(data.data1);
-		}, 'json');
+	
+	function likeCount() {
+		if('.like-btn').click(function(){
+			let likeOn = $('.like-btn');
+			
+			if (likeOn !)
+		})
 	}
-
-	$('.like-btn').click(function() {
-		ArticleDetail__doIncreaseLikeCount();
-	})
 </script>
 
 <section class="mt-8 text-x1 px-4">
@@ -75,16 +71,12 @@
 					<td style="text-align: center;"><span class="article-detail__hit-count">${article.hit }</span></td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">좋아요</th>
-					<td style="text-align: center;"><button class="article-detail__like-count like-btn" onclick="ArticleDetail__doIncreaseLikeCount()">${article.like }</button></td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">싫어요</th>
-					<td style="text-align: center;">${article.dislike}</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">총 좋아요 개수</th>
-					<td style="text-align: center;">${article.totalLike}</td>
+					<th style="text-align: center;">좋아요 / 싫어요</th>
+					<td style="text-align: center;">
+						<button class="btn btn-outline btn-success">좋아요👍 ${article.like }</button>
+						<button class="btn btn-outline btn-error">싫어요👎 ${article.dislike }</button>
+					<button></button>
+					</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">제목</th>

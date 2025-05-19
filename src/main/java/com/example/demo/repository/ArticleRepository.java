@@ -41,11 +41,6 @@ public interface ArticleRepository {
 
 	public int getArticleHitCount(int id);
 
-//	좋아요
-	public int increaseLikeCount(int id);
 
-	public int getArticleLikeCount(int id);
-
-// 싫어요
 	
 }

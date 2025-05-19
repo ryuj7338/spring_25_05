@@ -21,13 +21,11 @@ public class Article {
 	private int boardId;
 	private String title;
 	private String body;
+//	조회수
 	private int hit;
-	
 //	좋아요 & 싫어요
-	private String like;
-	private String dislike;
-	private int totalLike;
-	
+	private int like;
+	private int dislike;
 	
 	private String extra__writer;
 	private boolean userCanModify;
