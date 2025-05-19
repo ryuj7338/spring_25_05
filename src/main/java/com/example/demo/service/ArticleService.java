@@ -172,4 +172,12 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
 	}
 	
+	public int getLike(int relId) {
+		return articleRepository.getLike(relId);
+	}
+	
+	public int getDislike(int relId) {
+		return articleRepository.getDislike(relId);
+	}
+	
 }

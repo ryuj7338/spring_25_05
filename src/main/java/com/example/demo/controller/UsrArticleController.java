@@ -167,6 +167,7 @@ public class UsrArticleController {
 		}
 		
 		model.addAttribute("article", article);
+		model.addAttribute("usersReaction", usersReactionRd.getData1());
 		model.addAttribute("isAlreadyAddLikeRp", reactionService.isAlreadyAddLikeRp(rq.getLoginedMemberId(), id, "article"));
 		model.addAttribute("isAlreadyAddDislikeRp", reactionService.isAlreadyAddDislikeRp(rq.getLoginedMemberId(), id, "article"));
 		

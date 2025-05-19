@@ -173,4 +173,13 @@
 		DESC
 	</select>
 
+	<select id="getLike">
+		SELECT `like` FROM article
+		WHERE id = #{relId}
+	</select>
+	
+	<select id="getDisike">
+		SELECT dislike FROM article
+		WHERE id = #{relId}
+	</select>
 </mapper>

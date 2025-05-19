@@ -46,4 +46,8 @@ public interface ArticleRepository {
 // 싫어요
 	public int increaseDislikeReaction(int relId);
 	public int decreaseDislikeReaction(int relId);
+	
+	public int getLike(int relId);
+	
+	public int getDislike(int relId);
 }

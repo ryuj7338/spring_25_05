@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.service.ArticleService;
 import com.example.demo.service.ReactionService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.ResultData;
@@ -20,10 +21,13 @@ public class UsrReactionController {
 
 	@Autowired
 	private ReactionService reactionService;
+	
+	@Autowired
+	private ArticleService articleService;
 
 	@RequestMapping("/usr/reaction/doLike")
 	@ResponseBody
-	public Object doLike(String relTypeCode, int relId, String replaceUri) {
+	public ResultData doLike(String relTypeCode, int relId, String replaceUri) {
 
 		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 
@@ -31,12 +35,19 @@ public class UsrReactionController {
 
 		if (usersReaction == 1) {
 			ResultData rd = reactionService.deleteLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-			return Ut.jsReplace("S-1", "좋아요 취소", replaceUri);
+
+			int like = articleService.getLike(relId);
+			int dislike = articleService.getDislike(relId);
+			
+			return ResultData.from("S-1", "좋아요 취소", "like", like, "dislike", dislike);
+			
 		} else if (usersReaction == -1) {
 			ResultData rd = reactionService.deleteDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 			rd = reactionService.addLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 
-			return Ut.jsReplace("S-2", "싫어요 취소", replaceUri);
+			int like = articleService.getLike(relId);
+			int dislike = articleService.getDislike(relId);
+			return ResultData.from("S-2", "싫어요 취소", "like", like, "dislike", dislike);
 		}
 
 		ResultData reactionRd = reactionService.addLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
@@ -45,12 +56,14 @@ public class UsrReactionController {
 			return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg());
 		}
 
-		return Ut.jsReplace(reactionRd.getResultCode(), reactionRd.getMsg(), replaceUri);
+		int like = articleService.getLike(relId);
+		int dislike = articleService.getDislike(relId);
+		return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg(), "like", like, "dislike", dislike);
 	}
 
 	@RequestMapping("/usr/reaction/doDislike")
 	@ResponseBody
-	public Object doDislike(String relTypeCode, int relId, String replaceUri) {
+	public ResultData doDislike(String relTypeCode, int relId, String replaceUri) {
 
 		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 
@@ -58,12 +71,19 @@ public class UsrReactionController {
 
 		if (usersReaction == -1) {
 			ResultData rd = reactionService.deleteDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-			return Ut.jsReplace("S-1", "싫어요 취소", replaceUri);
+			
+			int like = articleService.getLike(relId);
+			int dislike = articleService.getDislike(relId);
+			
+			return ResultData.from("S-1", "싫어요 취소", "like", like, "dislike", dislike);
+			
 		} else if (usersReaction == 1) {
 			ResultData rd = reactionService.deleteLikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 			rd = reactionService.addDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 
-			return Ut.jsReplace("S-2", "좋아요 취소", replaceUri);
+			int like = articleService.getLike(relId);
+			int dislike = articleService.getDislike(relId);
+			return ResultData.from("S-2", "좋아요 취소", "like", like, "dislike", dislike);
 		}
 
 		ResultData reactionRd = reactionService.addDislikeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
@@ -72,6 +92,9 @@ public class UsrReactionController {
 			return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg());
 		}
 
-		return Ut.jsReplace(reactionRd.getResultCode(), reactionRd.getMsg(), replaceUri);
+		int like = articleService.getLike(relId);
+		int dislike = articleService.getDislike(relId);
+		
+		return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg(), "like", like, "dislike", dislike);
 	}
 }
