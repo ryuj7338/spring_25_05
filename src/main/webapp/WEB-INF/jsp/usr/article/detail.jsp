@@ -17,7 +17,7 @@
 
 <!-- 좋아요 / 싫어요 -->
 <script>
-	function checkRp() {
+	function checkRP() {
 		if (isAlreadyAddLikeRp == true) {
 			$('#likeButton').toggleClass('btn-outline');
 		} else if (isAlreadyAddDislikeRp == true) {
@@ -27,7 +27,7 @@
 		}
 	}
 	
-	function doLikeReaction(aritlceId) {
+	function doLikeReaction(articleId) {
 		
 		$.ajax({
 			url : '/usr/reaction/doLike',
@@ -189,7 +189,7 @@
 					<td style="text-align: center;"><span class="article-detail__hit-count">${article.hit }</span></td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">좋아요 / 싫어요 ${usersReaction }</th>
+					<th style="text-align: center;">좋아요 / 싫어요 / ${usersReaction }</th>
 					<td style="text-align: center;">
 						<button id="likeButton" class="btn btn-outline btn-success" onclick="doLikeReaction(${param.id})">
 							LIKE👍 <span class="likeCount">${article.like}</span>

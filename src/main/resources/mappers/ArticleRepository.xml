@@ -178,7 +178,7 @@
 		WHERE id = #{relId}
 	</select>
 	
-	<select id="getDisike">
+	<select id="getDislike">
 		SELECT dislike FROM article
 		WHERE id = #{relId}
 	</select>
