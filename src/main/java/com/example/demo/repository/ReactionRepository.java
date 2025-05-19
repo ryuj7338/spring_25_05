@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ReactionRepository {
 
 	int getSumReaction(int loginedMemberId, String relTypeCode, int relId);
+
+	int increaseReaction(int loginedMemberId, String relTypeCode, int relId);
 }
