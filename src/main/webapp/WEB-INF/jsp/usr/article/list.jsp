@@ -80,7 +80,6 @@
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
 						<td style="text-align: center;">${article.hit }</td>
 						<td style="text-align: center;">${article.like }</td>
-						<td style="text-align: center">${article.dislike }</td>
 					</tr>
 				</c:forEach>
 

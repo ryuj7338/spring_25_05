@@ -16,7 +16,7 @@ import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.ReactionService;
-import com.example.demo.service.CommentService;
+import com.example.demo.service.ReplyService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -44,7 +44,7 @@ public class UsrArticleController {
 	private ReactionService reactionService;
 	
 	@Autowired
-	private CommentService commentyService;
+	private ReplyService replyService;
 
 	@Autowired
 	private Rq rq;
@@ -165,6 +165,8 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), "article", id);
+		
+		ResultData usersReplyRd = replyService.usersReply(rq.getLoginedMemberId(), "article", id);
 
 		if(usersReactionRd.isSuccess()) {
 			model.addAttribute("userCanMakeReaction", usersReactionRd.isSuccess());

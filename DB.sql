@@ -49,12 +49,34 @@ CREATE TABLE `like` (
 	`like` INT(10) NOT NULL
 	);
 
-ALTER TABLE `like` MODIFY COLUMN `like` INT(10) NOT NULL AFTER relId;
+
+
+# 댓글 테이블 생성
+CREATE TABLE reply (
+id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT(10) UNSIGNED NOT NULL,
+relTypeCode CHAR(100) NOT NULL COMMENT '관련 데이터 타입 코드',
+relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+`body` TEXT NOT NULL
+);
+
+
+SELECT * FROM reply;
 
 DESC `like`;
 
 SELECT * FROM `like`;
 
+SELECT * FROM article;
+
+# article 테이블에 좋아요 컬럼 추가
+ALTER TABLE article ADD COLUMN `like` INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE article ADD COLUMN dislike INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+# article 테이블에 댓글 수 컬럼 추가
+ALTER TABLE article ADD COLUMN replyC INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 # LEFT JOIN(을 해야 전체 게시글에 좋아요를 알 수 있음 / null도 포함)
 # INNER JOIN -> null 제외한 게시글만 나옴
@@ -89,10 +111,22 @@ INNER JOIN `member` M
 ON A.memberId = M.id
 LEFT JOIN `like` L
 ON A.id = L.relId AND L.relTypeCode = 'article'
+WHERE A.boardId = 2
 GROUP BY A.id
 ORDER BY A.id DESC;
 
 
+
+SELECT A.*, M.nickname AS extra__writer,
+IFNULL(SUM(L.like), 0) AS totalLike
+FROM article A
+INNER JOIN `member` M
+ON A.memberId = M.id
+LEFT JOIN `like` L
+ON A.id = L.relId AND L.relTypeCode = 'article'
+WHERE A.boardId = 2
+GROUP BY A.id
+ORDER BY A.id DESC;
 
 # 좋아요 테스트 데이터 생성
 # 1번 회원이 1번 글에 싫어요
@@ -140,6 +174,15 @@ relTypeCode = 'article',
 relId = 1,
 `like` = 1;
 
+# 해당 번호의 좋아요
+SELECT `like`
+FROM `like`
+WHERE id =1;
+
+# 좋아요 클릭시 좋아요 수 증가
+UPDATE `like`
+SET `like` = `like` + 1
+WHERE id = 1;
 # 게시판 테스트 데이터 생성
 INSERT INTO board
 SET regDate = NOW(),
@@ -370,8 +413,8 @@ SELECT A.*, M.nickname
 FROM article A
 INNER JOIN `member` M
 ON A.memberId = M.id
-WHERE M.nickname LIKE '%구%'
+WHERE M.nickname LIKE '%구%';
 
-DESC article
+DESC article;
 
 ALTER TABLE article MODIFY COLUMN hit INT(10) NOT NULL DEFAULT 0;

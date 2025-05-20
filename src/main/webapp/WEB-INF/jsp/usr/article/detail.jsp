@@ -209,6 +209,10 @@
 					</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">댓글수</th>
+					<td style="text-align: center;"><span class="article-detail__reply-count">${article.hit }</span></td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">제목</th>
 					<td style="text-align: center;">${article.title }</td>
 				</tr>

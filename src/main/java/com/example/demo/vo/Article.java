@@ -27,6 +27,10 @@ public class Article {
 	private int like;
 	private int dislike;
 	
+//	댓글
+	private int replyCount;
+	
+	
 	private String extra__writer;
 	private boolean userCanModify;
 	public boolean userCanDelete;
