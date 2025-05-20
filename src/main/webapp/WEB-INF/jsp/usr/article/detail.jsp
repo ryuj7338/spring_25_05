@@ -189,7 +189,7 @@
 					<td style="text-align: center;"><span class="article-detail__hit-count">${article.hit }</span></td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">좋아요 / 싫어요 / ${usersReaction }</th>
+					<th style="text-align: center;">좋아요 / 싫어요</th>
 					<td style="text-align: center;">
 						<button id="likeButton" class="btn btn-outline btn-success" onclick="doLikeReaction(${param.id})">
 							LIKE👍 <span class="likeCount">${article.like}</span>
@@ -211,7 +211,7 @@
 		</table>
 
 		<div class="text-center mt-6">
-			<form action="../article/detail" method="POST">
+			<form action="../comment/doWrite" method="POST">
 				<div class="inline-flex justify-center  items-center mx-auto border border-solid border-blue-400 p-3 rounded-lg">
 					<div class="px-2">${article.extra__writer }</div>
 					<input type="text" placeholder="댓글 입력" class="px-6" name="comment" />

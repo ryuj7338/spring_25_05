@@ -16,6 +16,7 @@ import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.ReactionService;
+import com.example.demo.service.CommentService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -41,6 +42,9 @@ public class UsrArticleController {
 	
 	@Autowired
 	private ReactionService reactionService;
+	
+	@Autowired
+	private CommentService commentyService;
 
 	@Autowired
 	private Rq rq;
@@ -185,7 +189,7 @@ public class UsrArticleController {
 			return increaseHitCountRd;
 		}
 
-		return ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+		return ResultData.from(increaseHitCountRd.getResultCode(), increaseHitCountRd.getMsg(), "hitCount", articleService.getArticleHitCount(id), "articleId", id);
 	}
 
 	
