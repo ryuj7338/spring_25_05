@@ -102,11 +102,16 @@
 
 	<select id="getForArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.nickname AS extra__writer
+		SELECT A.*, M.nickname AS extra__writer,
+		IFNULL(COUNT(R.id), 0) AS
+		extra__repliesCount
 		FROM article A
 		INNER JOIN
 		`member` M
-		ON A.memberId = M.id
+		ON A.memberId =
+		M.id
+		LEFT JOIN `reply` R
+		ON A.id = R.relId
 		WHERE 1
 		<if test="boardId != 0">
 			AND A.boardId = #{boardId}
@@ -137,7 +142,10 @@
 		</if>
 		GROUP BY A.id
 		ORDER BY A.id DESC
-		LIMIT #{limitFrom}, #{limitTake}
+		<if test="limitFrom >= 0">
+			LIMIT #{limitFrom}, #{limitTake}
+		</if>
+
 	</select>
 
 	<select id="getLastInsertId" parameterType="int">
@@ -177,7 +185,7 @@
 		SELECT `like` FROM article
 		WHERE id = #{relId}
 	</select>
-	
+
 	<select id="getDislike">
 		SELECT dislike FROM article
 		WHERE id = #{relId}

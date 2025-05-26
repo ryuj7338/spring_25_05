@@ -43,9 +43,8 @@
 			</select>
 			<div class="flex items-center ">
 				<input type="text" placeholder="검색어 입력" class="" name="searchKeyword" value="${param.searcKeyword }" />
-				<button type="submit"  >
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
-						class="h-6 w-6  opacity-70">
+				<button type="submit">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-6 w-6  opacity-70">
   					  <path fill-rule="evenodd"
 							d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
 							clip-rule="evenodd" />
@@ -74,8 +73,11 @@
 				<c:forEach var="article" items="${articles }">
 					<tr>
 						<td style="text-align: center;">${article.id}</td>
-						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id }">${article.title }</a>
-						</td>
+						<td style="text-align: center;"><a class="hover:underline" href="detail?id=${article.id }">${article.title }
+								<c:if test="${article.extra__repliesCount > 0 }">
+									<span style="color: red;">[${article.extra__repliesCount }]</span>
+								</c:if>
+							</a></td>
 						<td style="text-align: center;">${article.extra__writer }</td>
 						<td style="text-align: center;">${article.regDate.substring(0,10)}</td>
 						<td style="text-align: center;">${article.hit }</td>

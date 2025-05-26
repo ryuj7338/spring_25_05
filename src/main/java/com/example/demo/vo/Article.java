@@ -28,7 +28,7 @@ public class Article {
 	private int dislike;
 	
 //	댓글
-	private int replyCount;
+	private int extra__repliesCount;
 	
 	
 	private String extra__writer;

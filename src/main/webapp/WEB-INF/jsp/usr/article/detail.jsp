@@ -210,7 +210,7 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">댓글수</th>
-					<td style="text-align: center;"><span class="article-detail__reply-count">${article.replyCount }</span></td>
+					<td style="text-align: center;"><span class="article-detail__reply-count">${article.extra__repliesCount }</span></td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">제목</th>
@@ -301,8 +301,8 @@
 						<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
 						<td style="text-align: center;">${reply.extra__writer}</td>
 						<td style="text-align: center;">${reply.body}</td>
-						<td style="text-align: center;">${reply.goodReactionPoint}</td>
-						<td style="text-align: center;">${reply.badReactionPoint}</td>
+						<td style="text-align: center;">${reply.like}</td>
+						<td style="text-align: center;">${reply.dislike}</td>
 					</tr>
 				</c:forEach>
 

@@ -178,6 +178,7 @@ public class UsrArticleController {
 		
 		model.addAttribute("replies", replies);
 		model.addAttribute("repliesCount", repliesCount);
+		
 		model.addAttribute("article", article);
 		model.addAttribute("usersReaction", usersReactionRd.getData1());
 		model.addAttribute("isAlreadyAddLikeRp", reactionService.isAlreadyAddLikeRp(rq.getLoginedMemberId(), id, "article"));
