@@ -13,6 +13,10 @@ public interface ReplyRepository {
 
 	public List<Reply> getForPrintReplies(String relTypeCode, int id);
 
+	public void writeReply(int loginedMemberId, String body, String relTypeCode, int relId);
+
+	public int getLastInsertId();
+
 	
 	
 }

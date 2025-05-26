@@ -223,40 +223,6 @@
 			</thead>
 		</table>
 
-		<section class="mt-24 text-xl px-4">
-			<div class="mx-auto">
-				<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-					<thead>
-						<tr>
-							<th style="text-align: center;">Registration Date</th>
-							<th style="text-align: center;">Writer</th>
-							<th style="text-align: center;">Body</th>
-							<th style="text-align: center;">Like</th>
-							<th style="text-align: center;">Dislike</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="reply" items="${replies}">
-							<tr class="hover">
-								<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
-								<td style="text-align: center;">${reply.extra__writer}</td>
-								<td style="text-align: center;">${reply.body}</td>
-								<td style="text-align: center;">${reply.goodReactionPoint}</td>
-								<td style="text-align: center;">${reply.badReactionPoint}</td>
-							</tr>
-						</c:forEach>
-
-						<c:if test="${empty replies}">
-							<tr>
-								<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
-							</tr>
-						</c:if>
-					</tbody>
-				</table>
-
-			</div>
-		</section>
-
 
 	</div class="btns">
 	<button type="button" onclick="history.back();">뒤로가기</button>
@@ -269,6 +235,87 @@
 	</c:if>
 
 
+<script>
+	function ReplyWrite__submit(form) {
+		console.log(form.body.value);
+		
+		form.body.value = form.body.value.trim();
+		
+		if(form.body.value.length < 3){
+			alert('3글자 이상 입력하세요');
+			form.body.focus();
+			return;
+		}
+		
+		form.submit();
+	}
+</script>
+
+<!-- 댓글 -->
+<section class="mt-24 text-xl px-4">
+	<c:if test="${rq.isLogined() }">
+		<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;" )>
+			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="hidden" name="relId" value="${article.id }" />
+				<tbody>
+
+					<tr>
+						<th>댓글 내용 입력</th>
+						<td style="text-align: center;">
+							<textarea class="input input-bordered input-sm w-full max-w-xs" name="body" autocomplete="off" type="text"
+								placeholder="내용을 입력하세요"></textarea>
+						</td>
+
+					</tr>
+					<tr>
+						<th></th>
+						<td style="text-align: center;">
+							<button class="btn btn-outline">작성</button>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</c:if>
+
+	<c:if test="${!rq.isLogined() }">
+		댓글 작성을 위해 <a class="btn btn-outline btn-primary" href="../member/login">로그인</a>이 필요합니다
+	</c:if>
+	<!-- 	댓글 리스트 -->
+	<div class="mx-auto">
+		<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+			<thead>
+				<tr>
+					<th style="text-align: center;">Registration Date</th>
+					<th style="text-align: center;">Writer</th>
+					<th style="text-align: center;">Body</th>
+					<th style="text-align: center;">Like</th>
+					<th style="text-align: center;">Dislike</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="reply" items="${replies}">
+					<tr class="hover">
+						<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
+						<td style="text-align: center;">${reply.extra__writer}</td>
+						<td style="text-align: center;">${reply.body}</td>
+						<td style="text-align: center;">${reply.goodReactionPoint}</td>
+						<td style="text-align: center;">${reply.badReactionPoint}</td>
+					</tr>
+				</c:forEach>
+
+				<c:if test="${empty replies}">
+					<tr>
+						<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+					</tr>
+				</c:if>
+			</tbody>
+		</table>
+
+	</div>
 </section>
+
 
 <%@ include file="../common/foot.jspf"%>
