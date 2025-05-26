@@ -3,8 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.demo.repository.ReactionRepository">
+<mapper
+	namespace="com.example.demo.repository.ReactionRepository">
 
-
+	<select id="getForPrintReplies"
+		resultType="com.example.demo.vo.Reply">
+		SELECT R.*, M.nickname AS extra__writer
+		FROM reply AS R
+		INNER JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		ORDER BY R.id ASC;
+	</select>
 
 </mapper>

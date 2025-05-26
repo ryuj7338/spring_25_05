@@ -210,7 +210,7 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">댓글수</th>
-					<td style="text-align: center;"><span class="article-detail__reply-count">${article.hit }</span></td>
+					<td style="text-align: center;"><span class="article-detail__reply-count">${article.replyCount }</span></td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">제목</th>
@@ -223,16 +223,40 @@
 			</thead>
 		</table>
 
-		<div class="text-center mt-6">
-			<form action="../comment/doWrite" method="POST">
-				<div class="inline-flex justify-center  items-center mx-auto border border-solid border-blue-400 p-3 rounded-lg">
-					<div class="px-2">${article.extra__writer }</div>
-					<input type="text" placeholder="댓글 입력" class="px-6" name="comment" />
-					<button type="submit" class="px-2">등록</button>
-				</div>
-		</div>
-		</form>
-	</div>
+		<section class="mt-24 text-xl px-4">
+			<div class="mx-auto">
+				<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+					<thead>
+						<tr>
+							<th style="text-align: center;">Registration Date</th>
+							<th style="text-align: center;">Writer</th>
+							<th style="text-align: center;">Body</th>
+							<th style="text-align: center;">Like</th>
+							<th style="text-align: center;">Dislike</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="reply" items="${replies}">
+							<tr class="hover">
+								<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
+								<td style="text-align: center;">${reply.extra__writer}</td>
+								<td style="text-align: center;">${reply.body}</td>
+								<td style="text-align: center;">${reply.goodReactionPoint}</td>
+								<td style="text-align: center;">${reply.badReactionPoint}</td>
+							</tr>
+						</c:forEach>
+
+						<c:if test="${empty replies}">
+							<tr>
+								<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+							</tr>
+						</c:if>
+					</tbody>
+				</table>
+
+			</div>
+		</section>
+
 
 	</div class="btns">
 	<button type="button" onclick="history.back();">뒤로가기</button>

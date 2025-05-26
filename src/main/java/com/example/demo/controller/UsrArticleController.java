@@ -20,6 +20,7 @@ import com.example.demo.service.ReplyService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
+import com.example.demo.vo.Reply;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
@@ -166,12 +167,17 @@ public class UsrArticleController {
 		
 		ResultData usersReactionRd = reactionService.usersReaction(rq.getLoginedMemberId(), "article", id);
 		
-		ResultData usersReplyRd = replyService.usersReply(rq.getLoginedMemberId(), "article", id);
 
 		if(usersReactionRd.isSuccess()) {
 			model.addAttribute("userCanMakeReaction", usersReactionRd.isSuccess());
 		}
 		
+		List<Reply> replies = replyService.getForPrintReplies("article", id);
+		
+		int repliesCount = replies.size();
+		
+		model.addAttribute("replies", replies);
+		model.addAttribute("repliesCount", repliesCount);
 		model.addAttribute("article", article);
 		model.addAttribute("usersReaction", usersReactionRd.getData1());
 		model.addAttribute("isAlreadyAddLikeRp", reactionService.isAlreadyAddLikeRp(rq.getLoginedMemberId(), id, "article"));
