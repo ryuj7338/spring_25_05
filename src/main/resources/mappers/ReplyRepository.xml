@@ -3,8 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper
-	namespace="com.example.demo.repository.ReplyRepository">
+<mapper namespace="com.example.demo.repository.ReplyRepository">
 
 	<select id="getForPrintReplies"
 		resultType="com.example.demo.vo.Reply">
@@ -21,7 +20,8 @@
 	<insert id="writeReply">
 		INSERT INTO reply
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		memberId = #{loginedMemberId},
 		relTypeCode = #{relTypeCode},
 		relId = #{relId},
@@ -29,7 +29,21 @@
 	</insert>
 
 	<select id="getLastInsertId" parameterType="int">
-		SELECT LAST_INSERT_ID()
+		SELECT
+		LAST_INSERT_ID()
 	</select>
+
+	<select id="getReply" parameterType="int">
+		SELECT R.*
+		FROM reply R
+		WHERE R.id = #{id}
+	</select>
+
+	<update id="modifyReply">
+		UPDATE reply
+		SET `body` = #{body},
+		updateDate = NOW()
+		WHERE id = #{id}
+	</update>
 
 </mapper>

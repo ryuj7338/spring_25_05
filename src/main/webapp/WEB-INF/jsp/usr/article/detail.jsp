@@ -139,6 +139,51 @@
 	});
 </script>
 
+<!-- 댓글 수정 -->
+<script>
+function toggleModifybtn(replyId) {
+	
+	console.log(replyId);
+	
+	$('#modify-btn-'+replyId).hide();
+	$('#save-btn-'+replyId).show();
+	$('#reply-'+replyId).hide();
+	$('#modify-form-'+replyId).show();
+}
+
+function doModifyReply(replyId) {
+	 console.log(replyId); // 디버깅을 위해 replyId를 콘솔에 출력
+	    
+	    // form 요소를 정확하게 선택
+	    var form = $('#modify-form-' + replyId);
+	    console.log(form); // 디버깅을 위해 form을 콘솔에 출력
+
+	    // form 내의 input 요소의 값을 가져옵니다
+	    var text = form.find('input[name="reply-text-' + replyId + '"]').val();
+	    console.log(text); // 디버깅을 위해 text를 콘솔에 출력
+
+	    // form의 action 속성 값을 가져옵니다
+	    var action = form.attr('action');
+	    console.log(action); // 디버깅을 위해 action을 콘솔에 출력
+	
+    $.post({
+    	url: '/usr/reply/doModify', // 수정된 URL
+        type: 'POST', // GET에서 POST로 변경
+        data: { id: replyId, body: text }, // 서버에 전송할 데이터
+        success: function(data) {
+        	$('#modify-form-'+replyId).hide();
+        	$('#reply-'+replyId).text(data);
+        	$('#reply-'+replyId).show();
+        	$('#save-btn-'+replyId).hide();
+        	$('#modify-btn-'+replyId).show();
+        },
+        error: function(xhr, status, error) {
+            alert('댓글 수정에 실패했습니다: ' + error);
+        }
+	})
+}
+</script>
+
 <script>
 	function ArticleDetail__doIncreaseHitCount() {
 		
@@ -235,7 +280,7 @@
 	</c:if>
 
 
-<script>
+	<script>
 	function ReplyWrite__submit(form) {
 		console.log(form.body.value);
 		
@@ -251,71 +296,85 @@
 	}
 </script>
 
-<!-- 댓글 -->
-<section class="mt-24 text-xl px-4">
-	<c:if test="${rq.isLogined() }">
-		<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;" )>
-			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-				<input type="hidden" name="relTypeCode" value="article" />
-				<input type="hidden" name="relId" value="${article.id }" />
-				<tbody>
+	<!-- 댓글 -->
+	<section class="mt-24 text-xl px-4">
+		<c:if test="${rq.isLogined() }">
+			<form action="../reply/doWrite" method="POST" onsubmit="ReplyWrite__submit(this); return false;" )>
+				<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+					<input type="hidden" name="relTypeCode" value="article" />
+					<input type="hidden" name="relId" value="${article.id }" />
+					<tbody>
 
-					<tr>
-						<th>댓글 내용 입력</th>
-						<td style="text-align: center;">
-							<textarea class="input input-bordered input-sm w-full max-w-xs" name="body" autocomplete="off" type="text"
-								placeholder="내용을 입력하세요"></textarea>
-						</td>
+						<tr>
+							<th>댓글 내용 입력</th>
+							<td style="text-align: center;"><textarea class="input input-bordered input-sm w-full max-w-xs" name="body"
+									autocomplete="off" type="text" placeholder="내용을 입력하세요"></textarea></td>
 
-					</tr>
-					<tr>
-						<th></th>
-						<td style="text-align: center;">
-							<button class="btn btn-outline">작성</button>
-						</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td style="text-align: center;">
+								<button class="btn btn-outline">작성</button>
+							</td>
 
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</c:if>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</c:if>
 
-	<c:if test="${!rq.isLogined() }">
+		<c:if test="${!rq.isLogined() }">
 		댓글 작성을 위해 <a class="btn btn-outline btn-primary" href="../member/login">로그인</a>이 필요합니다
 	</c:if>
-	<!-- 	댓글 리스트 -->
-	<div class="mx-auto">
-		<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-			<thead>
-				<tr>
-					<th style="text-align: center;">Registration Date</th>
-					<th style="text-align: center;">Writer</th>
-					<th style="text-align: center;">Body</th>
-					<th style="text-align: center;">Like</th>
-					<th style="text-align: center;">Dislike</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="reply" items="${replies}">
-					<tr class="hover">
-						<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
-						<td style="text-align: center;">${reply.extra__writer}</td>
-						<td style="text-align: center;">${reply.body}</td>
-						<td style="text-align: center;">${reply.like}</td>
-						<td style="text-align: center;">${reply.dislike}</td>
-					</tr>
-				</c:forEach>
-
-				<c:if test="${empty replies}">
+		<!-- 	댓글 리스트 -->
+		<div class="mx-auto">
+			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+				<thead>
 					<tr>
-						<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+						<th style="text-align: center;">Registration Date</th>
+						<th style="text-align: center;">Writer</th>
+						<th style="text-align: center;">Body</th>
+						<th style="text-align: center;">Like</th>
+						<th style="text-align: center;">Dislike</th>
+						<th style="text-align: center;">Edit</th>
+						<th style="text-align: center;">Delete</th>
 					</tr>
-				</c:if>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach var="reply" items="${replies}">
+						<tr class="hover">
+							<td style="text-align: center;">${reply.regDate.substring(0,10)}</td>
+							<td style="text-align: center;">${reply.extra__writer}</td>
+							<td style="text-align: center;"><span id="reply-${reply.id }">${reply.body}</span>
+								<form method="POST" id="modify-form-${reply.id }" style="display: none;" action="/usr/reply/doModify">
+									<input type="text" value="${reply.body }" name="reply-text-${reply.id }" />
+								</form></td>
+							<td style="text-align: center;">${reply.like}</td>
+							<td style="text-align: center;">${reply.dislike}</td>
+							<td style="text-align: center;"><c:if test="${reply.userCanModify }">
+									<%-- 								<a class="btn btn-outline btn-xs btn-success" href="../reply/modify?id=${reply.id }">수정</a> --%>
+									<button onclick="toggleModifybtn('${reply.id}');" id="modify-btn-${reply.id }" style="white-space: nowrap;"
+										class="btn btn-outline btn-xs btn-success">수정</button>
+									<button onclick="doModifyReply('${reply.id}');" style="white-space: nowrap; display: none;"
+										id="save-btn-${reply.id }" class="btn btn-outline btn-xs">저장</button>
+								</c:if></td>
+							<td style="text-align: center;"><c:if test="${reply.userCanDelete }">
+									<a class="btn btn-outline btn-xs btn-error" onclick="if(confirm('정말 삭제?') == false) return false;"
+										href="../reply/doDelete?id=${reply.id }">삭제</a>
+								</c:if></td>
+						</tr>
+					</c:forEach>
 
-	</div>
-</section>
+					<c:if test="${empty replies}">
+						<tr>
+							<td colspan="4" style="text-align: center;">댓글이 없습니다</td>
+						</tr>
+					</c:if>
+				</tbody>
+			</table>
+
+		</div>
+	</section>
 
 
-<%@ include file="../common/foot.jspf"%>
+	<%@ include file="../common/foot.jspf"%>
