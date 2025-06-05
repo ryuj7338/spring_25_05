@@ -1,116 +1,154 @@
-DROP DATABASE IF EXISTS spring_25_05;
-CREATE DATABASE spring_25_05;
-USE spring_25_05;
+DROP DATABASE IF EXISTS project;
+CREATE DATABASE project;
+USE project;
 
-# 게시글 테이블 생성
-CREATE TABLE article (
-							 id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-							 regDate DATETIME NOT NULL,
-							 updateDate DATETIME NOT NULL,
-							 title CHAR(100) NOT NULL,
-							 `body` TEXT NOT NULL
-);
+# 아직 미완성
 
-# 회원 테이블 생성
-CREATE TABLE `member` (
-							 id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-							 regDate DATETIME NOT NULL,
-							 updateDate DATETIME NOT NULL,
-							 loginId CHAR(100) NOT NULL,
-							 loginPw CHAR(200) NOT NULL,
-							 `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한 레벨 (3=일반, 7=관리자)',
-							 `name` CHAR(20) NOT NULL,
-							 nickname CHAR(20) NOT NULL,
-							 cellphoneNum CHAR(20) NOT NULL,
-							 email CHAR(50) NOT NULL,
-							 delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
-							 delDate DATETIME COMMENT '탈퇴 날짜' 
+# 커뮤니티 테이블 생성
+CREATE TABLE post (
+                      id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                      user_id INT(10) UNSIGNED NOT NULL,
+                      board_id INT(10) UNSIGNED NOT NULL,
+                      regDate DATETIME NOT NULL,
+                      updateDate DATETIME NOT NULL,
+                      title CHAR(100) NOT NULL,
+                      `body` TEXT NOT NULL,
+                      image VARCHAR(250) NOT NULL
 );
 
 # 게시판 테이블 생성
 CREATE TABLE board (
-							 id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-							 regDate DATETIME NOT NULL,
-							 updateDate DATETIME NOT NULL,
-							 `code` CHAR(100) NOT NULL UNIQUE COMMENT '공지사항 자유게시판 Q&A',
-							 `name` CHAR(100) NOT NULL UNIQUE COMMENT '게시판 이름',
-							 delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
-							 delDate DATETIME COMMENT '삭제 날짜' 
+                       id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                       regDate DATETIME NOT NULL,
+                       updateDate DATETIME NOT NULL,
+                       `code` CHAR(100) NOT NULL UNIQUE COMMENT 'Q&A 정보공유 후기 등(모든 게시글 이름 넣기)',
+                       `name` CHAR(100) NOT NULL UNIQUE COMMENT '게시판 이름',
+                       delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
+                       delDate DATETIME COMMENT '삭제 날짜'
 );
 
-# 좋아요 테이블 생성
-CREATE TABLE `like` ( 
-	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	regDate DATETIME NOT NULL,
-	updateDate DATETIME NOT NULL, 
-	memberId INT(10) UNSIGNED NOT NULL,
-	relTypeCode CHAR(100) NOT NULL COMMENT '관련 데이터 타입 코드',
-	relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
-	`like` INT(10) NOT NULL
-	);
+# 회원 테이블 생성
+CREATE TABLE users (
+                       id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                       regDate DATETIME NOT NULL,
+                       updateDate DATETIME NOT NULL,
+                       loginId CHAR(100) NOT NULL,
+                       loginPw CHAR(200) NOT NULL,
+                       `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한 레벨 (3=일반, 7=관리자)',
+                       `name` CHAR(20) NOT NULL,
+                       nickname CHAR(20) NOT NULL,
+                       cellphone CHAR(20) NOT NULL,
+                       email CHAR(50) NOT NULL,
+                       delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
+                       delDate DATETIME COMMENT '탈퇴 날짜'
+);
 
+
+# 자료실 테이블 생성
+CREATE TABLE resources (
+                           id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                           user_id INT(10) UNSIGNED NOT NULL,
+                           board_id INT(10) UNSIGNED NOT NULL,
+                           regDate DATETIME NOT NULL,
+                           updateDate DATETIME NOT NULL,
+                           title VARCHAR(50) NOT NULL,
+                           `body` TEXT NOT NULL,
+                           image VARCHAR(250) NOT NULL,
+                           pdf VARCHAR(250) NOT NULL,
+                           zip VARCHAR(250) NOT NULL
+);
+
+
+# 좋아요 테이블 생성
+CREATE TABLE likes (
+                       id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                       regDate DATETIME NOT NULL,
+                       target_type_code CHAR(50) NOT NULL COMMENT '게시글, 댓글',
+                       target_id INT(10) UNSIGNED NOT NULL,
+                       `like` INT(10) NOT NULL
+);
 
 
 # 댓글 테이블 생성
 CREATE TABLE reply (
-id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-regDate DATETIME NOT NULL,
-updateDate DATETIME NOT NULL,
-memberId INT(10) UNSIGNED NOT NULL,
-relTypeCode CHAR(100) NOT NULL COMMENT '관련 데이터 타입 코드',
-relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
-`body` TEXT NOT NULL
+                       id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                       regDate DATETIME NOT NULL,
+                       updateDate DATETIME NOT NULL,
+                       post_id INT(10) UNSIGNED NOT NULL,
+                       user_id INT(10) UNSIGNED NOT NULL
 );
 
 
-SELECT * FROM reply;
+# 자격증 테이블
+CREATE TABLE qualifications(
+                               id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                               `name` VARCHAR(50) NOT NULL,
+                               category_code VARCHAR(50) NOT NULL COMMENT '무도, 경비, 응급 등'
+);
 
-DESC `like`;
 
-SELECT * FROM `like`;
+# 대학교 테이블
+CREATE TABLE university(
+                           id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                           `name` VARCHAR(50) NOT NULL,
+                           region VARCHAR(50) NOT NULL,
+                           major VARCHAR(50) NOT NULL,
+                           url VARCHAR(500) NOT NULL
+);
 
-SELECT * FROM article;
+
+# 채용공고 테이블
+CREATE TABLE jobs(
+                     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                     title VARCHAR(200) NOT NULL,
+                     `body` TEXT NOT NULL,
+                     category CHAR(50) NOT NULL COMMENT '경찰, 경호, 소방, 군인',
+                     url VARCHAR(500) NOT NULL,
+                     regDate DATETIME NOT NULL,
+                     deadline DATE NOT NULL
+);
+
+
 
 # article 테이블에 좋아요 컬럼 추가
 ALTER TABLE article ADD COLUMN `like` INT(10) UNSIGNED NOT NULL DEFAULT 0;
-ALTER TABLE article ADD COLUMN dislike INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
-# article 테이블에 댓글 수 컬럼 추가
-ALTER TABLE article ADD COLUMN replyC INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
+
 
 # LEFT JOIN(을 해야 전체 게시글에 좋아요를 알 수 있음 / null도 포함)
-# INNER JOIN -> null 제외한 게시글만 나옴
+    # INNER JOIN -> null 제외한 게시글만 나옴
 SELECT A.*, M.nickname AS extra__writer, SUM(L.like) AS `totalLike`,
 FROM article A
-INNER JOIN `member` M
-ON A.memberId = M.id
-LEFT JOIN `like` L
-ON A.id = L.relId AND L.relTypeCode = 'article'
+         INNER JOIN `member` M
+                    ON A.memberId = M.id
+         LEFT JOIN `like` L
+                   ON A.id = L.relId AND L.relTypeCode = 'article'
 GROUP BY A.id
 ORDER BY A.id DESC;
 
 #서브쿼리
-SELECT A.*, 
-IFNULL(SUM(L.like), 0) AS `TotalLike`, 
-IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
-IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS `DisLike`
+SELECT A.*,
+       IFNULL(SUM(L.like), 0) AS `TotalLike`,
+       IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
+       IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS `DisLike`
 FROM article A
-LEFT JOIN `like` L
-ON A.id = L.relId AND L.relTypeCode = 'article'
+         LEFT JOIN `like` L
+                   ON A.id = L.relId AND L.relTypeCode = 'article'
 GROUP BY A.id
 ORDER BY A.id DESC;
 
 
 #JOIN
 SELECT A.*, M.nickname AS extra__writer,
-IFNULL(SUM(L.like), 0) AS TotalLike, 
-IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
-IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS DisLike
+       IFNULL(SUM(L.like), 0) AS TotalLike,
+       IFNULL(SUM(IF(L.like > 0, L.like , 0)), 0) AS `Like`,
+       IFNULL(SUM(IF(L.like < 0 , L.like, 0)), 0) AS DisLike
 FROM article A
-INNER JOIN `member` M
-ON A.memberId = M.id
-LEFT JOIN `like` L
-ON A.id = L.relId AND L.relTypeCode = 'article'
+         INNER JOIN `member` M
+                    ON A.memberId = M.id
+         LEFT JOIN `like` L
+                   ON A.id = L.relId AND L.relTypeCode = 'article'
 WHERE A.boardId = 2
 GROUP BY A.id
 ORDER BY A.id DESC;
@@ -118,12 +156,12 @@ ORDER BY A.id DESC;
 
 
 SELECT A.*, M.nickname AS extra__writer,
-IFNULL(SUM(L.like), 0) AS totalLike
+       IFNULL(SUM(L.like), 0) AS totalLike
 FROM article A
-INNER JOIN `member` M
-ON A.memberId = M.id
-LEFT JOIN `like` L
-ON A.id = L.relId AND L.relTypeCode = 'article'
+         INNER JOIN `member` M
+                    ON A.memberId = M.id
+         LEFT JOIN `like` L
+                   ON A.id = L.relId AND L.relTypeCode = 'article'
 WHERE A.boardId = 2
 GROUP BY A.id
 ORDER BY A.id DESC;
@@ -204,23 +242,23 @@ updateDate = NOW(),
 
 
 # 게시글 테스트 데이터 생성
-INSERT INTO article
+INSERT INTO
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '귀멸의 칼날',
-`body` = '물의 호흡';
+title = '제목1',
+`body` = '내용1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '포켓몬스터',
-`body` = '피카츄';
+title = '제목2',
+`body` = '내용2';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-title = '짱구는 못말려',
-`body` = '짱구';
+title = '제목3',
+`body` = '내용3';
 
 
 # 회원 테스트 데이터 생성
@@ -242,8 +280,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test1',
 loginPw = 'test1',
-`name` = '탄지로',
-nickname = '탄지로',
+`name` = '회원1',
+nickname = '회원1',
 cellphoneNum = '01012341234',
 email = 'tanjiro@gmail.com';
 
@@ -252,8 +290,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test2',
 loginPw = 'test2',
-`name` = '피카츄',
-nickname = '피카츄',
+`name` = '회원2',
+nickname = '회원2',
 cellphoneNum = '01056785678',
 email = 'pikachyu@gmail.com';
 
@@ -262,8 +300,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test3',
 loginPw = 'test3',
-`name` = '짱구',
-nickname = '짱구',
+`name` = '회원3',
+nickname = '회원3',
 cellphoneNum = '01078787878',
 email = 'shinJJang@gmail.com';
 
@@ -272,8 +310,8 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'test4',
 loginPw = 'test4',
-`name` = '맹구',
-nickname = '맹구',
+`name` = '회원4',
+nickname = '회원4',
 cellphoneNum = '01022222222',
 email = 'maenggu@gmail.com';
 
@@ -315,7 +353,7 @@ SET boardId = 2;
 SELECT COUNT(*)
 FROM article
 WHERE boardId = 2 AND title LIKE '%asd%'
-OR `body` LIKE '%asd%';
+   OR `body` LIKE '%asd%';
 
 
 # 모두 보여주기
@@ -327,9 +365,9 @@ WHERE boardId =  AND title LIKE '%귀%';
 ALTER TABLE article ADD COLUMN hit INT(10) NOT NULL;
 
 UPDATE article
-		SET
-		hit = hit + 1
-		WHERE id = 1;
+SET
+    hit = hit + 1
+WHERE id = 1;
 
 
 
@@ -337,16 +375,16 @@ UPDATE article
 ###########################
 
 SELECT A.*, M.nickname AS extra__writer
-		FROM article AS A
-		INNER JOIN `member` AS M
-		ON A.memberId = M.id
-		WHERE A.id = 1;
-		
-SELECT A.*, M.nickname AS extra__writer 
-		FROM article AS A
-		INNER JOIN `member` AS M
-		ON A.memberId = M.id
-		ORDER BY A.id DESC;
+FROM article AS A
+         INNER JOIN `member` AS M
+                    ON A.memberId = M.id
+WHERE A.id = 1;
+
+SELECT A.*, M.nickname AS extra__writer
+FROM article AS A
+         INNER JOIN `member` AS M
+                    ON A.memberId = M.id
+ORDER BY A.id DESC;
 
 ######################################################################
 
@@ -387,13 +425,13 @@ INSERT INTO articleset regDate = NOW(),updateDate = NOW(),title = CONCAT('제목
 
 UPDATE article
 SET updateDate = NOW(),
- title = 'title1',
- `body` = 'body1'
+    title = 'title1',
+    `body` = 'body1'
 WHERE id = 3;
 
 UPDATE article
 SET updateDate = NOW(),
- `body` = 'body1'
+    `body` = 'body1'
 WHERE id = 1;
 
 SELECT * FROM article;
@@ -404,15 +442,15 @@ WHERE id = 5;
 
 UPDATE article
 SET updateDate = NOW(),
- title = 'title1',
- `body` = 'body1'
+    title = 'title1',
+    `body` = 'body1'
 WHERE id = 5;
 
 
 SELECT A.*, M.nickname
 FROM article A
-INNER JOIN `member` M
-ON A.memberId = M.id
+         INNER JOIN `member` M
+                    ON A.memberId = M.id
 WHERE M.nickname LIKE '%구%';
 
 DESC article;
