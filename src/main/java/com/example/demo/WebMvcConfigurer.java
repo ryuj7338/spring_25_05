@@ -23,16 +23,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(beforeActionInterCeptor).addPathPatterns("/**");
-//
-//		registry.addInterceptor(needLoginInterCeptor).addPathPatterns("/usr/article/write")
-//				.addPathPatterns("/usr/article/doWrite").addPathPatterns("/usr/article/modify")
-//				.addPathPatterns("/usr/article/doModify").addPathPatterns("/usr/article/doDelete")
-//				.addPathPatterns("/usr/member/doLogout");
-//
-//		registry.addInterceptor(needLogoutInterCeptor).addPathPatterns("/usr/member/login")
-//				.addPathPatterns("/usr/member/doLogin").addPathPatterns("/usr/member/join")
-//				.addPathPatterns("/usr/member/doJoin");
+
 		InterceptorRegistration ir;
 		
 		ir = registry.addInterceptor(beforeActionInterCeptor);
@@ -47,7 +38,14 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 		ir.addPathPatterns("/usr/article/modify");
 		ir.addPathPatterns("/usr/article/doModify");
 		ir.addPathPatterns("/usr/article/doDelete");
+		
+		ir.addPathPatterns("/usr/member/myPage");
+		ir.addPathPatterns("/usr/member/checkPw");
+		ir.addPathPatterns("/usr/member/doCheckPw");
 		ir.addPathPatterns("/usr/article/doLogout");
+		ir.addPathPatterns("/usr/member/modify");
+		ir.addPathPatterns("/usr/member/doModify");
+		
 		ir.addPathPatterns("/usr/reply/doWrite");
 		
 		ir.addPathPatterns("/usr/reaction/doLike");
@@ -59,6 +57,10 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 		ir.addPathPatterns("/usr/member/doLogin");
 		ir.addPathPatterns("/usr/member/join");
 		ir.addPathPatterns("/usr/member/doJoin");
+		ir.addPathPatterns("/usr/member/findLoginId");
+		ir.addPathPatterns("/usr/member/doFindLoginId");
+		ir.addPathPatterns("/usr/member/findLoginPw");
+		ir.addPathPatterns("/usr/member/doFindLoginPw");
 		
 	}
 }

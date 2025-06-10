@@ -18,4 +18,8 @@ public interface MemberRepository {
 	public Member getMemberLoginId(String loginId);
 
 	public Member getMemberByNameAndEmail(String name, String email);
+	
+	public void modify(int loginedMemberId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	
+	public void modifyWithoutPw(int loginedMemberId, String name, String nickname, String cellphoneNum, String email);
 }
