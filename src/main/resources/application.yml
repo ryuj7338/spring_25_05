@@ -1,6 +1,17 @@
 server:
   port: 8080
 spring:
+  mail:
+      host: smtp.gmail.com
+      port: 587
+      username: ryuj7338@gmail.com
+      #password: 구글 계정 앱 비밀번호
+      properties:
+        mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -13,3 +24,9 @@ spring:
 mybatis:
   type-aliases-package: com.example.demo.vo
   mapper-locations: classpath:/mappers/**/*.xml
+
+  custom:
+    siteName: spring_25_05
+    siteMainUri: http://localhost:8080
+    emailFrom: no-reply@localhost
+    emailFromName: spring_25_05
