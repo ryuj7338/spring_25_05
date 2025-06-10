@@ -8,21 +8,34 @@
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
 		<form action="../member/doLogin" method="POST">
+			<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
+			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+				<tbody>
+					<tr>
+						<th>아이디</th>
+						<td style="text-align: center;">
+							<input class="input input-primary" name="loginId" autocomplete="off" type="text" placeholder="아이디 입력" />
+						</td>
+					</tr>
+					<tr>
+						<th>비밀번호</th>
+						<td style="text-align: center;">
+							<input class="input input-primary" name="loginPw" autocomplete="off" type="text" placeholder="비밀번호 입력" />
+						</td>
+					</tr>
 
-			<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 ">
-				<legend class="fieldset-legend">Login</legend>
+					<tr>
+						<th></th>
+						<td style="text-align: center;">
+							<button class="btn btn-ghost">로그인</button>
+						</td>
+					</tr>
 
-				<label class="label" style="text-align: center;">아이디</label> <input name="loginId" autocomplete="off" type="text"
-					placeholder="아이디 입력" /> <label class="label">비밀번호</label> <input name="loginPw" autocomplete="off" type="text"
-					placeholder="비밀번호 입력" />
-
-				<button class="btn btn-neutral mt-4">Login</button>
-			</fieldset>
-
-
+				</tbody>
+			</table>
 		</form>
 		<div class="btns">
-			<button type="button" onclick="history.back();">뒤로가기</button>
+			<button class="btn btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
 
 		</div>
 	</div>
